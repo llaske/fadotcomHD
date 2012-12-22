@@ -1,0 +1,20 @@
+﻿<!doctype html>
+<html>
+<head>
+	<title>FA.com tablet</title>
+	<script src="enyo/enyo.js" type="text/javascript"></script>
+	<script src="enyo/lib/layout/package.js" type="text/javascript"></script>
+	<script src="enyo/lib/onyx/package.js" type="text/javascript"></script>
+	<script src="depends.js" type="text/javascript"></script>	
+	<link href="styles.css" rel="stylesheet" type="text/css" />	
+</head>
+<body>
+<script type="text/javascript">
+// Touchpad specific
+try { if (PalmSystem) PalmSystem.stageReady(); } catch (e) {};
+
+// Launch main screen
+var app = new FADotCom.TabletApp().renderInto(document.body);
+</script>
+</body>
+</html>

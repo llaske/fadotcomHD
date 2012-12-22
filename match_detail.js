@@ -1,0 +1,189 @@
+// Display Match Detail
+enyo.kind({
+	name: "FADotCom.Matchs.Detail",
+	kind: "FittableRows",
+	classes: "match-detail",
+	published: {match: null, teamdom: null, teamext: null},
+	components: [
+		{components: [
+			{classes: "match-detail-block", components: [
+				{name: "itemImageDom", kind: "Image", classes: "match-detail-imagedom"},
+				{name: "itemNomDom", classes: "match-detail-nomdom", onclick: "clickEquipeDom" }
+			]},
+			{classes: "match-detail-block", components: [
+				{name: "itemScoreDom", classes: "match-detail-scoredom"},
+				{content: " - ", classes: "match-detail-tiret"},
+				{name: "itemScoreExt", classes: "match-detail-scoreext"}
+			]},
+			{classes: "match-detail-block", components: [
+				{name: "itemImageExt", classes: "match-detail-imageext", kind: "Image"},
+				{name: "itemNomExt", classes: "match-detail-nomext", onclick: "clickEquipeExt" }
+			]}
+		]},
+		{classes: "match-detail-pad1"},		
+		{components: [
+			{classes: "match-detail-row", components: [
+				{classes: "match-detail-row-title"},
+				{name: "qt1title", content: "qt1", classes: "match-detail-row-title-qt1"},
+				{name: "qt2title", content: "qt2", classes: "match-detail-row-title-qt2"},
+				{name: "qt3title", content: "qt3", classes: "match-detail-row-title-qt1"},
+				{name: "qt4title", content: "qt4", classes: "match-detail-row-title-qt2"}
+			]},
+			{classes: "match-detail-pad2"},		
+			{classes: "match-detail-row", components: [
+				{name: "scoredom", classes: "match-detail-row-score"},		
+				{name: "qt1dom", classes: "match-detail-row-qt1"},
+				{name: "qt2dom", classes: "match-detail-row-qt2"},
+				{name: "qt3dom", classes: "match-detail-row-qt1"},
+				{name: "qt4dom", classes: "match-detail-row-qt2"}
+			]},
+			{classes: "match-detail-pad2"},		
+			{classes: "match-detail-row", components: [
+				{name: "scoreext", classes: "match-detail-row-score"},			
+				{name: "qt1ext", classes: "match-detail-row-qt1"},
+				{name: "qt2ext", classes: "match-detail-row-qt2"},
+				{name: "qt3ext", classes: "match-detail-row-qt1"},
+				{name: "qt4ext", classes: "match-detail-row-qt2"}
+			]}
+		]},
+		{name: "matchdate", classes: "match-detail-date"},
+		{tag: "hr", classes: "match-detail-line"},
+		{kind: "Scroller", fit: true, components: [
+			{name: "articlesList", fit: true, kind: "Repeater", onSetupItem: "listSetupRow", components: [
+				{name: "item", classes: "item", ontap: "itemClick", components: [
+					{name: "article", kind: "FADotCom.Article"},
+					{tag: "hr", classes: "match-detail-line"}
+				]}
+			]}
+		]}		
+	],
+	
+	// Constructor
+	create: function() {
+		this.inherited(arguments);
+		this.data = [];
+		this.matchChanged();
+		this.teamdomChanged();
+		this.teamextChanged();
+	},
+	
+	// Set team dom info
+	teamdomChanged: function() {
+		this.$.itemNomDom.setContent(this.teamdom.nom);	
+		this.$.scoredom.setContent(this.teamdom.nom);			
+		this.$.itemImageDom.setSrc("http://footballamericain.com/images/images/team/100/"+this.teamdom.image);	
+		this.$.itemScoreDom.setContent(this.match.scoredom);	
+	},
+	
+	// Set team ext info
+	teamextChanged: function() {
+		this.$.itemNomExt.setContent(this.teamext.nom);
+		this.$.scoreext.setContent(this.teamext.nom);		
+		this.$.itemImageExt.setSrc("http://footballamericain.com/images/images/team/100/"+this.teamext.image);	
+		this.$.itemScoreExt.setContent(this.match.scoreext);	
+	},
+	
+	// Match updated, load score info
+	matchChanged: function() {
+		// Get score info
+		var ws = new enyo.JsonpRequest({
+			url: "http://m.footballamericain.com/backoffice/v1/fa_matchs_scores.php?id=" + this.match.id,
+			callbackName: "callback",
+		});
+		ws.response(enyo.bind(this, "queryResponseScore"));
+		ws.error(enyo.bind(this, "queryFailScore"));
+		ws.go();	
+
+		// Get articles
+		ws = new enyo.JsonpRequest({
+			url: "http://m.footballamericain.com/backoffice/v1/fa_articles.php?match=" + this.match.id,
+			callbackName: "callback",
+		});
+		ws.response(enyo.bind(this, "queryResponseArticle"));
+		ws.error(enyo.bind(this, "queryFailArticle"));
+		ws.go();
+	},
+	
+	// Score retrieved
+	queryResponseScore: function(inSender, inResponse) {
+		this.data = inResponse;
+		var record = this.data;
+		
+		// Set score for each quart-time
+		this.$.qt1dom.setContent(this.valueOrNot(record.qt1_dom));
+		this.$.qt2dom.setContent(this.valueOrNot(record.qt2_dom));
+		this.$.qt3dom.setContent(this.valueOrNot(record.qt3_dom));
+		this.$.qt4dom.setContent(this.valueOrNot(record.qt4_dom));
+		this.$.qt1ext.setContent(this.valueOrNot(record.qt1_ext));
+		this.$.qt2ext.setContent(this.valueOrNot(record.qt2_ext));
+		this.$.qt3ext.setContent(this.valueOrNot(record.qt3_ext));
+		this.$.qt4ext.setContent(this.valueOrNot(record.qt4_ext));
+		
+		// Set date
+		if (this.match.date != undefined && (this.match.scoredom == null || this.match.scoreext == null)) {
+			var dateParts = this.match.date.split("-");
+			var dayNames = new Array("Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi");
+			var date = new Date(dateParts[0], parseFloat(dateParts[1])-1, parseFloat(dateParts[2]));
+			var timeParts = this.match.heure.split(":");
+			this.$.matchdate.setContent(dayNames[date.getDay()]+' '+date.getDate()+'/'+(date.getMonth()+1)+' - '+timeParts[0]+'h'+timeParts[1]);
+			this.$.matchdate.show();
+		} else {
+			// Hide date
+			this.$.matchdate.hide();
+		}
+	},
+	
+	// Value for score
+	valueOrNot: function(value) {
+		return value == null ? "-" : value;
+	},
+	
+	// Error loading score
+	queryFailScore: function(inSender) {
+		console.log("failed");
+	},
+	
+	// Articles related to match loaded
+	queryResponseArticle: function(inSender, inResponse) {
+		this.articles = inResponse;
+		this.$.articlesList.setCount(this.articles.length);	
+	},
+	
+	// Error loading articles
+	queryFailArticle: function(inSender) {
+		console.log("failed");
+	},
+	
+	// Update articles list
+	listSetupRow: function(inSender, inEvent) {
+		inEvent.item.$.article.setItem(this.articles[inEvent.index]);
+	},
+	
+	// TODO: Click on an article, show in detail
+	itemClick: function(inSender, inEvent) {
+		var record = this.articles[inEvent.index];
+		console.log("click on "+record.id);	
+		/*History.push({label: "Score", backto: "FADotCom.Matchs.Detail", params: [this.match, this.teamdom, this.teamext]});
+		var detail = new FADotCom.Articles.Detail();
+		detail.init(record);
+		detail.renderInto(document.body);*/
+	},
+	
+	// TODO: Click on a team, show it in detail
+	clickEquipeDom: function(inSender, inEvent) {
+		console.log("click on "+this.teamdom);
+		/*History.push({label: "Score", backto: "FADotCom.Matchs.Detail", params: [this.match, this.teamdom, this.teamext]});
+		var equipe = new FADotCom.Equipe();
+		equipe.init(this.teamdom);
+		equipe.renderInto(document.body);*/
+	},
+
+	// TODO: Click on a team, show it in detail
+	clickEquipeExt: function(inSender, inEvent) {
+		console.log("click on "+this.teamext);
+		/*History.push({label: "Score", backto: "FADotCom.Matchs.Detail", params: [this.match, this.teamdom, this.teamext]});
+		var equipe = new FADotCom.Equipe();
+		equipe.init(this.teamext);
+		equipe.renderInto(document.body);*/
+	}	
+});

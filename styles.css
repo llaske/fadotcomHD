@@ -1,0 +1,398 @@
+.fitnav {
+	border-width: 1px;
+	border-style: solid;
+	border-color: black;
+	width: 150px;
+}
+
+.nav-item {
+	position: relative;
+	border-bottom: 1px solid #0E0E0E;
+	padding: 16px 12px;
+	background-color: #333333;
+	color:white;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.nav-item-selected {
+	background-color: #226B9A;
+}
+
+.fitnav-toolbar {
+	height: 27px;
+}
+
+.fitlist {
+	border-width: 1px;
+	border-style: solid;
+	border-color: black;
+	width: 400px;
+}
+
+.list-spinner {
+	width: 25px;
+	height: 25px;
+}
+
+.fittable-shadow {
+	box-shadow: -6px 0px 6px rgba(0,0,0,0.3);
+	-moz-box-shadow: -6px 0px 6px rgba(0,0,0,0.3);
+	-webkit-box-shadow: -6px 0px 6px rgba(0,0,0,0.3);
+}
+
+.fitdetail {
+	border-width: 1px;
+	border-style: solid;
+	border-color: black;
+}
+
+.article-item {
+	background-color: #ffffff;
+}
+
+.article-item-selected {
+	background-color: #226B9A;
+}
+
+.article-list-titre {
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 0px;
+	margin-left: 10px;
+}
+
+.article-list-image {
+	display: inline-block;
+	margin-top: 3px;
+	max-height: 60px;
+	height: 60px;
+	max-width: 100px;
+}
+
+.article-list-resume {
+	display: inline-block;
+	font-size: 13px;
+	margin-left: 10px;
+	width: 240px;
+	vertical-align: top;
+	margin-top: 5px;
+}
+
+.article-list-line {
+	height:1px;
+}
+
+.article-detail {
+	background-color: white;
+	margin-left: 10px;
+}
+
+.article-detail-titre {
+	font-weight: bold;
+	color: red;
+	font-size: 20px;
+}
+
+.article-detail-soustitre {
+	font-weight: bold;
+	color: black;
+	font-size: 16px;
+}
+
+.article-detail-auteurdate {
+	color: gray;
+	font-style: italic;
+}
+
+.article-detail-image {
+	padding: 8px;
+}
+
+.article-detail-corps {
+}
+
+.match-list-line {
+	background-color: #666;
+	color: white;
+	font-weight: bold;
+	padding: 8px 14px;
+}
+
+.match-item {
+	background-color: #ffffff;
+}
+
+.match-item-selected {
+	background-color: #226B9A;
+}
+
+.match-list-imagedom {
+	display: inline-block;
+	padding: 8px;
+	width: 30px;
+	vertical-align: text-bottom;
+}
+
+.match-list-nomdom {
+	display: inline-block;
+	font-size: 15px;
+	height: 30px;
+	width: 120px;
+	vertical-align: text-bottom;
+}
+
+.match-list-scoredom {
+	font-weight: bold;
+	display: inline-block;
+	height: 30px;
+	vertical-align: text-bottom;
+}
+
+.match-list-tiret {
+	display: inline-block;
+	height: 30px;
+	vertical-align: text-bottom;
+}
+
+.match-list-scoreext {
+	font-weight: bold;
+	display: inline-block;
+	height: 30px;
+	vertical-align: text-bottom;
+}
+
+.match-list-nomext {
+	display: inline-block;
+	font-size: 15px;
+	height: 30px;
+	width: 120px;
+	vertical-align: text-bottom;
+	text-align: right;
+}
+
+.match-list-imageext {
+	padding: 8px;
+	width: 30px;
+	display: inline-block;
+	vertical-align: text-bottom;
+}
+
+.match-list-date {
+	display: inline-block;
+	font-style: italic;
+	vertical-align: text-top;
+	text-align: center;
+	width: 30px;
+	font-size: 10px;
+}
+
+.match-list-itemline {
+	height:1px;
+}
+
+.match-detail {
+	background-color: white;
+}
+
+.match-detail-block {
+	display: inline-block;
+}
+
+.match-detail-imagedom {
+	width: 30px;
+	margin-left: 150px;
+}
+
+.match-detail-nomdom {
+	width: 130px;
+	text-align: center;
+	margin-left: 100px;
+	color:blue;
+	text-decoration:underline;
+}
+
+.match-detail-scoredom {
+	display: inline-block;
+	font-weight: bold;
+	height: 30px;
+}
+
+.match-detail-tiret {
+	display: inline-block;
+	height: 30px;
+}
+
+.match-detail-scoreext {
+	display: inline-block;
+	font-weight: bold;
+	height: 30px;
+}
+
+.match-detail-imageext {
+	width: 30px;
+	margin-left: 50px;
+}
+
+.match-detail-nomext {
+	width: 130px;
+	text-align: center;
+	color:blue;
+	text-decoration:underline;
+}
+
+.match-detail-pad1 {
+	padding: 8px;
+}
+
+.match-detail-pad2 {
+	padding: 1px;
+}
+
+.match-detail-row {
+	width: 400px;
+}
+
+.match-detail-date {
+	font-style: italic;
+	font-size: 13px;
+	margin-top: 20px;
+	margin-left: 170px;
+}
+
+.match-detail-line {
+	height:1px;
+	margin-top: 15px;
+}
+
+.match-detail-row-title {
+	margin-left: 130px;
+	display: inline-block;
+	padding: 8px;
+	font-weight: bold;
+}
+
+.match-detail-row-title-qt1 {
+	width: 30px;
+	display: inline-block;
+	padding: 8px;
+	background-color:#becfe1;
+}
+
+.match-detail-row-title-qt2 {
+	width: 30px;
+	display: inline-block;
+	padding: 8px;
+	background-color:#eaeff4;
+}
+
+.match-detail-row-score {
+	width: 130px; 
+	display: inline-block;
+	padding: 8px;
+	font-weight: bold;
+	text-align: right;
+}
+
+.match-detail-row-qt1 {
+	width: 30px;
+	display: inline-block;
+	font-weight: bold;
+	padding: 8px;
+	background-color:#becfe1;
+}
+
+.match-detail-row-qt2 {
+	width: 30px;
+	display: inline-block;
+	font-weight: bold;
+	padding: 8px;
+	background-color:#eaeff4;
+}
+
+
+.classement-item {
+	position: relative;
+	border-bottom: 1px solid #0E0E0E;
+	padding: 16px 12px;
+	background-color: #333333;
+	color:white;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	font-size: 16px;
+}
+
+.classement-item-selected {
+	background-color: #226B9A;
+}
+
+.classement-line-title {
+	width: 340px;
+	height: 32px;
+}
+
+.classement-line-division {
+	width: 140px;
+	font-weight: bold;
+	color: white; 
+	display: inline-block;
+}
+
+.classement-column-titlesingle {
+	width: 40px; 
+	font-weight: bold;
+	color: white;
+	display: inline-block;
+}
+
+.classement-column-titledouble {
+	width: 80px;
+	font-weight: bold;
+	color: white;
+	display: inline-block;
+}
+
+.classement-column-pad {
+	padding: 8px;
+}
+
+.classement-line-item {
+	width: 340px;
+	height: 32px;
+}
+
+.classement-line-name {
+	width: 140px;
+	height: 32px;
+	display: inline-block;
+}
+
+.classement-column-single {
+	width: 40px;
+	height: 32px;
+	display: inline-block;
+}
+
+.classement-column-double {
+	width: 80px;
+	height: 32px;
+	display: inline-block;
+}
+
+.AFC-header-background {
+	background-color: #960d00;
+}
+
+.AFC-background {
+	background-color: #ffb1ad;
+}
+
+.NFC-header-background {
+	background-color: #226b9a;
+}
+
+.NFC-background {
+	background-color: #add4ed;
+}

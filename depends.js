@@ -1,0 +1,10 @@
+enyo.depends(
+	"$/app.js",
+	"$/articles.js",
+	"$/article_detail.js",	
+	"$/matchs.js",
+	"$/match_detail.js",
+	"$/classements.js",
+	"$/equipe.js",
+	"$/preferences.js"
+);

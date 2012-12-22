@@ -1,0 +1,10 @@
+{
+  "id": "com.footballamericain.hd",
+  "version": "1.0.0",
+  "vendor": "C2S",
+  "type": "web",
+  "main": "index.html",
+  "title": "Football Americain HD",
+  "icon": "images/facom64x64.png",  
+  "uiRevision": "2"
+}
