@@ -1,31 +1,8 @@
 Preferences = {};
 
+Preferences.backoffice = "http://m.footballamericain.com/backoffice/v1/";
+//Preferences.backoffice = "http://localhost/mobile/backoffice/";
 Preferences.nfl = true;
 Preferences.ncaa = true;
 Preferences.elite = true;
-
-Preferences.getLigues = function() {
-	var count = 0;
-	var ligues = "";
-	if (this.nfl) {
-		ligues = ligues + "1";
-		count++;
-	}
-	if (this.ncaa) {
-		if (count > 0) {
-			ligues = ligues + ",";
-			count = 0;
-		}
-		ligues = ligues + "2";
-		count++;
-	}
-	if (this.elite) {
-		if (count > 0) {
-			ligues = ligues + ",";
-			count = 0;
-		}
-		ligues = ligues + "3";
-		count++;
-	}	
-	return ligues;
-}
+Preferences.unemaxitems = 6;

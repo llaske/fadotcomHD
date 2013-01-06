@@ -20,7 +20,7 @@ TeamCache.bulkloadTeams = function(ids, ok_callback, ko_callback, context) {
 	}
 	
 	// Build url
-	var url = "http://m.footballamericain.com/backoffice/v1/fa_equipes.php?id=" + ids;
+	var url = Preferences.backoffice + "fa_equipes.php?id=" + ids;
 	TeamCache.ok_callback = ok_callback;
 	TeamCache.ko_callback = ko_callback;
 	TeamCache.context = context;
@@ -105,14 +105,14 @@ enyo.kind({
 		this.$.itemWeb.setContent("<a href='"+this.team.web+"'>"+this.team.web+"</a>");	
 		this.$.button.setContent(History.label());
 		var ws = new enyo.JsonpRequest({
-			url: "http://m.footballamericain.com/backoffice/v1/fa_matchs.php?ligue=1&equipe=" + team.id,
+			url: Preferences.backoffice + "fa_matchs.php?ligue=1&equipe=" + team.id,
 			callbackName: "callback",
 		});
 		ws.response(enyo.bind(this, "queryResponseMatch"));
 		ws.error(enyo.bind(this, "queryFailMatch"));
 		ws.go();
 		ws = new enyo.JsonpRequest({
-			url: "http://m.footballamericain.com/backoffice/v1/fa_articles.php?equipe=" + team.id,
+			url: Preferences.backoffice + "fa_articles.php?equipe=" + team.id,
 			callbackName: "callback",
 		});
 		ws.response(enyo.bind(this, "queryResponseArticle"));

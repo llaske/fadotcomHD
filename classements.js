@@ -13,17 +13,20 @@ enyo.kind({
 	create: function() {
 		this.selection = -1;	
 		this.inherited(arguments);
-		app.spinnerList(false);		
+		app.spinnerList(false);	
+		this.cmdAFC();
 	},
 	
 	// Show conference detail
 	cmdAFC: function() {
 		this.selectItem(0);
+		app.spinnerDetail(true);		
 		app.showDetail({kind: "FADotCom.Classements.Detail", conference: "AFC"});	
 	},
 	
 	cmdNFC: function() {
 		this.selectItem(1);
+		app.spinnerDetail(true);		
 		app.showDetail({kind: "FADotCom.Classements.Detail", conference: "NFC"});		
 	},
 	
@@ -43,7 +46,7 @@ enyo.kind({
 	published: { conference: null },
 	components: [
 		{ kind: "enyo.Scroller", fit: true, components: [
-			{name: "list", fit: true, kind: "Repeater", onSetupItem: "listSetupRow", components: [		
+			{name: "list", classes: "list-classement", fit: true, kind: "Repeater", onSetupItem: "listSetupRow", components: [		
 				{name: "item", components: [ 
 					{name: "divTitle", classes: "classement-line-title", components: [
 						{name: "itemDivision", classes: "classement-line-division"},
@@ -77,7 +80,7 @@ enyo.kind({
 		this.afc = [];
 		this.nfc = [];		
 		var ws = new enyo.JsonpRequest({
-			url: "http://m.footballamericain.com/backoffice/v1/fa_classements.php?ligue=1",
+			url: Preferences.backoffice + "fa_classements.php?ligue=1",
 			callbackName: "callback",
 		});
 		ws.response(enyo.bind(this, "queryResponse"));
@@ -101,6 +104,7 @@ enyo.kind({
 			this.$.list.setCount(countafc);	
 		else
 			this.$.list.setCount(countnfc);	
+		app.spinnerDetail(false);			
 	},
 	
 	// Data error

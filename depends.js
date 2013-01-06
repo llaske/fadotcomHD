@@ -6,5 +6,6 @@ enyo.depends(
 	"$/match_detail.js",
 	"$/classements.js",
 	"$/equipe.js",
+	"$/history.js",
 	"$/preferences.js"
 );

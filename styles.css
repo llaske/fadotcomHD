@@ -1,8 +1,40 @@
+.fadotcom-title {
+}
+
+.fitscreen {
+	margin-top: 80px;
+}
+
 .fitnav {
 	border-width: 1px;
 	border-style: solid;
-	border-color: black;
+	border-color: #cccccc;
 	width: 150px;
+}
+
+.prefs-button {
+	position: absolute;
+	left: 20px;
+}
+
+.refresh-button {
+	position: absolute;
+	right: 30px;
+}
+
+.back-button {
+	position: absolute;
+	left: 100px;
+}
+
+.send-button {
+	position: absolute;
+	right: 80px;
+}
+
+.web-button {
+	position: absolute;
+	right: 30px;
 }
 
 .nav-item {
@@ -27,7 +59,7 @@
 .fitlist {
 	border-width: 1px;
 	border-style: solid;
-	border-color: black;
+	border-color: #cccccc;
 	width: 400px;
 }
 
@@ -37,15 +69,15 @@
 }
 
 .fittable-shadow {
-	box-shadow: -6px 0px 6px rgba(0,0,0,0.3);
-	-moz-box-shadow: -6px 0px 6px rgba(0,0,0,0.3);
-	-webkit-box-shadow: -6px 0px 6px rgba(0,0,0,0.3);
+	box-shadow: -5px 0px 0px rgba(0,0,0,0.3);
+	-moz-box-shadow: -5px 0px 0px rgba(0,0,0,0.3);
+	-webkit-box-shadow: -5px 0px 0px rgba(0,0,0,0.3);
 }
 
 .fitdetail {
 	border-width: 1px;
 	border-style: solid;
-	border-color: black;
+	border-color: #cccccc;
 }
 
 .article-item {
@@ -69,6 +101,7 @@
 	max-height: 60px;
 	height: 60px;
 	max-width: 100px;
+	margin-left: 8px;
 }
 
 .article-list-resume {
@@ -86,7 +119,7 @@
 
 .article-detail {
 	background-color: white;
-	margin-left: 10px;
+	padding: 10px 40px 30px 10px;
 }
 
 .article-detail-titre {
@@ -107,10 +140,12 @@
 }
 
 .article-detail-image {
-	padding: 8px;
+	padding: 8px 8px 8px 8px;
 }
 
 .article-detail-corps {
+	text-align: justify;
+	margin-bottom: 40px;
 }
 
 .match-list-line {
@@ -311,6 +346,9 @@
 	background-color:#eaeff4;
 }
 
+.list-classement {
+	padding: 10px;
+}
 
 .classement-item {
 	position: relative;

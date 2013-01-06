@@ -3,6 +3,7 @@
 enyo.kind({
 	name: "FADotCom.Articles",
 	kind: "Scroller",
+	published: { ligues: "1,2,3", maxitem: -1 },
 	components: [
 		{name: "articlesList", fit: true, kind: "Repeater", onSetupItem: "setupItem", components: [
 			{name: "item", ontap: "taped", components: [
@@ -16,15 +17,24 @@ enyo.kind({
 	create: function() {
 		this.inherited(arguments);
 		this.selection = null;
-	
+		this.maxitemChanged();		
+		this.liguesChanged();
+	},
+
+	// Ligues property changed, upgrade display
+	liguesChanged: function() {
 		// Get articles from backoffice
 		var ws = new enyo.JsonpRequest({
-			url: "http://m.footballamericain.com/backoffice/v1/fa_articles.php?ligue=" + Preferences.getLigues(),
+			url: Preferences.backoffice + "fa_articles.php?ligue=" + this.ligues,
 			callbackName: "callback",
 		});
 		ws.response(enyo.bind(this, "queryResponse"));
 		ws.error(enyo.bind(this, "queryFail"));
 		ws.go();
+	},
+	
+	// Maxitem changed
+	maxitemChanged: function() {
 	},
 	
 	// Change selection
@@ -40,7 +50,7 @@ enyo.kind({
 		this.data = inResponse;
 		
 		// Display it
-		this.$.articlesList.setCount(this.data.length);
+		this.$.articlesList.setCount(this.maxitem == -1 ? this.data.length : this.maxitem);
 		app.spinnerList(false);
 	},
 	
@@ -59,6 +69,7 @@ enyo.kind({
 	taped: function(inSender, inEvent) {
 		this.selectItem(this.$.articlesList.children[inEvent.index].$.article);
 		console.log("click on "+this.data[inEvent.index].id);	
+		app.spinnerDetail(true);
 		app.showDetail({kind: "FADotCom.Articles.Detail", record: this.data[inEvent.index]});
 	}
 });

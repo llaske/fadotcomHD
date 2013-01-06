@@ -20,7 +20,7 @@ enyo.kind({
 		
 		// Get matchs
 		var ws = new enyo.JsonpRequest({
-			url: "http://m.footballamericain.com/backoffice/v1/fa_matchs.php?ligue=1",
+			url: Preferences.backoffice + "fa_matchs.php?ligue=1",
 			callbackName: "callback",
 		});
 		ws.response(enyo.bind(this, "queryResponseMatch"));
@@ -39,10 +39,10 @@ enyo.kind({
 		// Compute teams id
 		var i;
 		var ids = [];
-		var count = 0;		
+		var count = 0;	
 		for(i = 0 ; i < data.length ; i++) {
-			ids[count++] = this.equipedom;
-			ids[count++] = this.equipeext;		
+			ids[count++] = data[i].equipedom;			
+			ids[count++] = data[i].equipeext;		
 		}		
 		
 		// Bulk load all teams
@@ -91,6 +91,7 @@ enyo.kind({
 	taped: function(inSender, inEvent) {
 		this.selectItem(this.$.matchsList.children[inEvent.index].$.match);
 		console.log("click on "+this.data[inEvent.index].id);	
+		app.spinnerDetail(true);		
 		app.showDetail({kind: "FADotCom.Matchs.Detail", 
 			match: this.data[inEvent.index],
 			teamdom: TeamCache.getTeam(this.data[inEvent.index].equipedom),

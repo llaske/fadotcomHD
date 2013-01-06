@@ -87,7 +87,7 @@ enyo.kind({
 	matchChanged: function() {
 		// Get score info
 		var ws = new enyo.JsonpRequest({
-			url: "http://m.footballamericain.com/backoffice/v1/fa_matchs_scores.php?id=" + this.match.id,
+			url: Preferences.backoffice + "fa_matchs_scores.php?id=" + this.match.id,
 			callbackName: "callback",
 		});
 		ws.response(enyo.bind(this, "queryResponseScore"));
@@ -96,7 +96,7 @@ enyo.kind({
 
 		// Get articles
 		ws = new enyo.JsonpRequest({
-			url: "http://m.footballamericain.com/backoffice/v1/fa_articles.php?match=" + this.match.id,
+			url: Preferences.backoffice + "fa_articles.php?match=" + this.match.id,
 			callbackName: "callback",
 		});
 		ws.response(enyo.bind(this, "queryResponseArticle"));
@@ -131,6 +131,7 @@ enyo.kind({
 			// Hide date
 			this.$.matchdate.hide();
 		}
+		app.spinnerDetail(false);		
 	},
 	
 	// Value for score
@@ -159,14 +160,13 @@ enyo.kind({
 		inEvent.item.$.article.setItem(this.articles[inEvent.index]);
 	},
 	
-	// TODO: Click on an article, show in detail
+	// Click on an article, show in detail
 	itemClick: function(inSender, inEvent) {
 		var record = this.articles[inEvent.index];
 		console.log("click on "+record.id);	
-		/*History.push({label: "Score", backto: "FADotCom.Matchs.Detail", params: [this.match, this.teamdom, this.teamext]});
-		var detail = new FADotCom.Articles.Detail();
-		detail.init(record);
-		detail.renderInto(document.body);*/
+		History.push({kind: "FADotCom.Matchs.Detail", match: this.match, teamdom: this.teamdom, teamext: this.teamext});
+		app.spinnerDetail(true);
+		app.showDetail({kind: "FADotCom.Articles.Detail", record: this.articles[inEvent.index]});
 	},
 	
 	// TODO: Click on a team, show it in detail
