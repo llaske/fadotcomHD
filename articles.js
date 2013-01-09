@@ -24,12 +24,13 @@ enyo.kind({
 	// Ligues property changed, upgrade display
 	liguesChanged: function() {
 		// Get articles from backoffice
-		var ws = new enyo.JsonpRequest({
+		var ws = new Cached.JsonpRequest({
 			url: Preferences.backoffice + "fa_articles.php?ligue=" + this.ligues,
-			callbackName: "callback",
+			callbackName: "callback"
 		});
-		ws.response(enyo.bind(this, "queryResponse"));
-		ws.error(enyo.bind(this, "queryFail"));
+		ws.setResponse(enyo.bind(this, "queryResponse"));
+		ws.setCachedResponse(enyo.bind(this, "queryCachedResponse"));
+		ws.setError(enyo.bind(this, "queryFail"));
 		ws.go();
 	},
 	
@@ -44,13 +45,24 @@ enyo.kind({
 		this.selection = s;
 	},
 	
-	// Response from database
-	queryResponse: function(inSender, inResponse) {
-		// Store article
+	// Cached response, update display but continue to wait
+	queryCachedResponse: function(inSender, inResponse) {
+		// Store articles
 		this.data = inResponse;
 		
 		// Display it
 		this.$.articlesList.setCount(this.maxitem == -1 ? this.data.length : this.maxitem);
+	},
+	
+	// Definitive response, update if needed, stop to wait
+	queryResponse: function(inSender, inResponse) {
+		// Different from cache, store articles and redisplay it
+		if (!inSender.cached) {
+			this.data = inResponse;
+			this.$.articlesList.setCount(this.maxitem == -1 ? this.data.length : this.maxitem);
+		}
+		
+		// Stop waiting
 		app.spinnerList(false);
 	},
 	

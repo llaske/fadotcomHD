@@ -10,12 +10,12 @@ enyo.kind({
 		{kind: "FittableColumns", classes: "fitscreen enyo-fit", components: [
 			{name: "fitnav", kind: "FittableRows", classes: "fitnav",  ondragover: "dragover", ondrop: "drop", components: [
 				{name: "navitems", fit: true, components: [
-					{ classes: "nav-item", content: "A la une", ontap: "cmdUne"},
-					{ classes: "nav-item", content: "Elite", ontap: "cmdElite"},
-					{ classes: "nav-item", content: "NCAA", ontap: "cmdNCAA"},
-					{ classes: "nav-item", content: "NFL", ontap: "cmdNFL"},
-					{ classes: "nav-item", content: "Scores", ontap: "cmdMatchs"},
-					{ classes: "nav-item", content: "Classements", ontap: "cmdClassements"}
+					{name: "navune", classes: "nav-item", content: "A la une", ontap: "cmdUne"},
+					{name: "navelite", classes: "nav-item", content: "Elite", ontap: "cmdElite"},
+					{name: "navncaa", classes: "nav-item", content: "NCAA", ontap: "cmdNCAA"},
+					{name: "navnfl", classes: "nav-item", content: "NFL", ontap: "cmdNFL"},
+					{name: "navmatchs", classes: "nav-item", content: "Scores", ontap: "cmdMatchs"},
+					{name: "navclassements", classes: "nav-item", content: "Classements", ontap: "cmdClassements"}
 				]},	
 				{kind: "onyx.Toolbar", components: [
 					{content: "", classes: "fitnav-toolbar" },
@@ -27,7 +27,8 @@ enyo.kind({
 				{kind: "onyx.Toolbar", components: [
 					{name: "grabberlist", kind: "onyx.Grabber", ondblclick: "doubleclick"},
 					{name: "spinnerlist", showing: false, kind: "Image", src: "images/spinner-dark.gif", classes: "list-spinner"},
-					{name: "refresh", showing: true, kind: "onyx.IconButton", src: "images/refresh.png", classes: "refresh-button", ontap: "refreshList"}
+					{name: "refresh", showing: true, kind: "onyx.IconButton", src: "images/refresh.png", classes: "refresh-button", ontap: "refreshList"},
+					{name: "plus", showing: false, kind: "onyx.IconButton", src: "images/plus.png", classes: "plus-button"}
 				]}
 			]},
 			{name: "fitdetail", kind: "FittableRows", fit: true, classes: "fitdetail fittable-shadow", ondragover: "dragover", ondragstart: "dragstart", ondrop: "drop", components: [
@@ -37,7 +38,8 @@ enyo.kind({
 					{name: "spinnerdetail", showing: false, kind: "Image", src: "images/spinner-dark.gif", classes: "list-spinner"},
 					{name: "backbutton", kind: "onyx.IconButton", src: "images/back.png", showing: false, classes: "back-button", ontap: "historyBack"},
 					{name: "webbutton", kind: "onyx.IconButton", src: "images/web.png", showing: false, classes: "web-button", ontap: "openWebsite"},
-					{name: "sendbutton", kind: "onyx.IconButton", src: "images/send.png", showing: false, classes: "send-button", ontap: "openMail"}
+					{name: "sendbutton", kind: "onyx.IconButton", src: "images/send.png", showing: false, classes: "send-button", ontap: "openMail"},
+					{name: "favbutton", kind: "onyx.ToggleIconButton", src: "images/favorite.png", showing: false, value: true, classes: "fav-button"}					
 				]}
 			]}
 		]}
@@ -47,9 +49,10 @@ enyo.kind({
 	create: function() {
 		// Init
 		this.inherited(arguments); 
-		this.navselection = -1;
+		this.navselection = null;
 		this.toolbarweburl = null;
 		this.toolbarmailurl = null;
+		app = this; // HACK: force global setting
 		
 		// Select first item
 		this.refresh = this.cmdUne;
@@ -66,22 +69,22 @@ enyo.kind({
 	// View articles
 	cmdUne: function() {
 		this.refresh = this.cmdUne;	
-		this.viewArticles("1,2,3", 0, Preferences.unemaxitems);
+		this.viewArticles("1,2,3", "navune", Preferences.unemaxitems);
 	},
 	
 	cmdElite: function() {
 		this.refresh = this.cmdElite;	
-		this.viewArticles("3", 1, -1);
+		this.viewArticles("3", "navelite", -1);
 	},
 	
 	cmdNCAA: function() {
 		this.refresh = this.cmdNCAA;	
-		this.viewArticles("2", 2, -1);
+		this.viewArticles("2", "navncaa", -1);
 	},
 	
 	cmdNFL: function() {
 		this.refresh = this.cmdNFL;	
-		this.viewArticles("1", 3, -1);
+		this.viewArticles("1", "navnfl", -1);
 	},
 	
 	viewArticles: function(ligues, index, maxitem) {
@@ -97,7 +100,7 @@ enyo.kind({
 	// View matchs
 	cmdMatchs: function() {
 		this.refresh = this.cmdMatchs;	
-		this.selectItem(4);	
+		this.selectItem("navmatchs");	
 		this.clearPanel(this.$.listcontent);
 		this.clearPanel(this.$.detailcontent);
 		this.spinnerList(true);	
@@ -109,7 +112,7 @@ enyo.kind({
 	// View matchs
 	cmdClassements: function() {
 		this.refresh = this.cmdClassements;	
-		this.selectItem(5);	
+		this.selectItem("navclassements");	
 		this.clearPanel(this.$.listcontent);
 		this.clearPanel(this.$.detailcontent);
 		this.spinnerList(true);		
@@ -124,10 +127,18 @@ enyo.kind({
 	},
 	
 	// Change selection
-	selectItem: function(i) {
-		if (this.navselection != -1) this.$.navitems.getControls()[this.navselection].removeClass("nav-item-selected");	
-		this.$.navitems.getControls()[i].addClass("nav-item-selected");	
-		this.navselection = i;
+	selectItem: function(key) {
+		if (this.navselection != null) 
+			this.navselection.removeClass("nav-item-selected")
+		var navitems = this.$.navitems.getControls();
+		for (var i = 0 ; i < navitems.length ; i++) {
+			var navitem = navitems[i];
+			if (navitem.name == key) {
+				navitem.addClass("nav-item-selected");
+				this.navselection = navitem;
+				break;
+			}
+		}
 	},
 	
 	// Show a new content in the detailed view

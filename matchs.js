@@ -19,23 +19,38 @@ enyo.kind({
 		this.selection = null;
 		
 		// Get matchs
-		var ws = new enyo.JsonpRequest({
+		var ws = new Cached.JsonpRequest({
 			url: Preferences.backoffice + "fa_matchs.php?ligue=1",
 			callbackName: "callback",
 		});
-		ws.response(enyo.bind(this, "queryResponseMatch"));
-		ws.error(enyo.bind(this, "queryFailMatch"));
+		ws.setResponse(enyo.bind(this, "queryResponseMatch"));
+		ws.setCachedResponse(enyo.bind(this, "queryCachedResponseMatch"));		
+		ws.setError(enyo.bind(this, "queryFailMatch"));
 		ws.go();
 	},
 	
-	// Match loaded, get teams info
-	queryResponseMatch: function(inSender, inResponse) {
+	// Match loaded in cached, get teams info and continue waiting
+	queryCachedResponseMatch: function(inSender, inResponse) {	
 		this.data = inResponse;
-		this.loadTeam(this.data);
+		this.loadTeam(this.data, true);
+	},
+	
+	// Match loaded, redisplay match and stop waiting
+	queryResponseMatch: function(inSender, inResponse) {	
+		// Request aborted, nothing to do
+		if (typeof this.$.matchsList === "undefined")
+			return;
+			
+		// Update match list if needed
+		if (!inSender.cached) {		
+			this.data = inResponse;		
+			this.$.matchsList.setCount(this.data.length);
+		}
+		app.spinnerList(false);		
 	},
 	
 	// Load all teams
-	loadTeam: function(data) {
+	loadTeam: function(data, waiting) {
 		// Compute teams id
 		var i;
 		var ids = [];
@@ -48,9 +63,13 @@ enyo.kind({
 		// Bulk load all teams
 		TeamCache.bulkloadTeams(ids,
 			function(context) {
+				// Request aborted, nothing to do
+				if (typeof context.$.matchsList === "undefined")
+					return;
+					
 				// Update match list when done
 				context.$.matchsList.setCount(context.data.length);
-				app.spinnerList(false);
+				app.spinnerList(true);	
 			},
 			
 			function(context) {
@@ -70,7 +89,7 @@ enyo.kind({
 	selectItem: function(s) {
 		if (this.selection != null) this.selection.setSelected(false);
 		s.setSelected(true);
-		this.selection = s;
+		this.selection = s;	
 	},
 	
 	// Setup team line
@@ -84,7 +103,11 @@ enyo.kind({
 		if (index == 0 || this.data[index-1].journee != match.journee)
 			inEvent.item.$.divider.canGenerate = true;	
 		else
-			inEvent.item.$.divider.canGenerate = false;			
+			inEvent.item.$.divider.canGenerate = false;	
+		if (this.selection != null && this.selection.item.id == match.id) {
+			inEvent.item.$.match.setSelected(true);
+			this.selection = inEvent.item.$.match;
+		}
 	},
 	
 	// Match taped
@@ -169,8 +192,7 @@ enyo.kind({
 	setSelected: function(selected) {
 		if (selected) {
 			this.addClass("match-item-selected");
-		}
-		else
+		} else
 			this.removeClass("match-item-selected");			
 	}
 });

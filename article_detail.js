@@ -40,6 +40,10 @@ enyo.kind({
 	
 	// Get response value
 	queryResponse: function(inSender, inResponse) {
+		// Request aborted, nothing to do
+		if (typeof this.$.itemCorps === "undefined")
+			return;	
+			
 		// Save data
 		this.data = inResponse;
 		var record = this.data;

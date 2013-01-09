@@ -7,5 +7,7 @@ enyo.depends(
 	"$/classements.js",
 	"$/equipe.js",
 	"$/history.js",
+	"$/storage.js",
+	"$/cached_jsonp.js",
 	"$/preferences.js"
 );

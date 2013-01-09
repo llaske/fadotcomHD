@@ -1,7 +1,7 @@
 // Display Match Detail
 enyo.kind({
 	name: "FADotCom.Matchs.Detail",
-	kind: "FittableRows",
+	kind: "Scroller",
 	classes: "match-detail",
 	published: {match: null, teamdom: null, teamext: null},
 	components: [
@@ -102,10 +102,16 @@ enyo.kind({
 		ws.response(enyo.bind(this, "queryResponseArticle"));
 		ws.error(enyo.bind(this, "queryFailArticle"));
 		ws.go();
+		History.displayButton();
 	},
 	
 	// Score retrieved
 	queryResponseScore: function(inSender, inResponse) {
+		// Request aborted, nothing to do
+		if (typeof this.$.qt1dom === "undefined")
+			return;	
+
+		// Get data
 		this.data = inResponse;
 		var record = this.data;
 		
@@ -146,6 +152,11 @@ enyo.kind({
 	
 	// Articles related to match loaded
 	queryResponseArticle: function(inSender, inResponse) {
+		// Request aborted, nothing to do
+		if (typeof this.$.articlesList === "undefined")
+			return;	
+			
+		// Display articles
 		this.articles = inResponse;
 		this.$.articlesList.setCount(this.articles.length);	
 	},
@@ -169,21 +180,19 @@ enyo.kind({
 		app.showDetail({kind: "FADotCom.Articles.Detail", record: this.articles[inEvent.index]});
 	},
 	
-	// TODO: Click on a team, show it in detail
+	// Click on a team, show it in detail
 	clickEquipeDom: function(inSender, inEvent) {
-		console.log("click on "+this.teamdom);
-		/*History.push({label: "Score", backto: "FADotCom.Matchs.Detail", params: [this.match, this.teamdom, this.teamext]});
-		var equipe = new FADotCom.Equipe();
-		equipe.init(this.teamdom);
-		equipe.renderInto(document.body);*/
+		console.log("click on team "+this.teamdom.id);
+		History.push({kind: "FADotCom.Matchs.Detail", match: this.match, teamdom: this.teamdom, teamext: this.teamext});
+		app.spinnerDetail(true);
+		app.showDetail({kind: "FADotCom.Equipe", team: this.teamdom});
 	},
 
-	// TODO: Click on a team, show it in detail
+	// Click on a team, show it in detail
 	clickEquipeExt: function(inSender, inEvent) {
-		console.log("click on "+this.teamext);
-		/*History.push({label: "Score", backto: "FADotCom.Matchs.Detail", params: [this.match, this.teamdom, this.teamext]});
-		var equipe = new FADotCom.Equipe();
-		equipe.init(this.teamext);
-		equipe.renderInto(document.body);*/
+		console.log("click on team "+this.teamext.id);
+		History.push({kind: "FADotCom.Matchs.Detail", match: this.match, teamdom: this.teamdom, teamext: this.teamext});
+		app.spinnerDetail(true);
+		app.showDetail({kind: "FADotCom.Equipe", team: this.teamext});
 	}	
 });
