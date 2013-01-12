@@ -44,7 +44,8 @@ enyo.kind({
 		// Update match list if needed
 		if (!inSender.cached) {		
 			this.data = inResponse;		
-			this.$.matchsList.setCount(this.data.length);
+			this.loadTeam(this.data, false);
+			return;
 		}
 		app.spinnerList(false);		
 	},
@@ -69,7 +70,7 @@ enyo.kind({
 					
 				// Update match list when done
 				context.$.matchsList.setCount(context.data.length);
-				app.spinnerList(true);	
+				app.spinnerList(waiting);	
 			},
 			
 			function(context) {

@@ -519,3 +519,96 @@
 .team-detail-line {
 	height:1px;
 }
+
+.favori-item {
+	background-color: #ffffff;
+}
+
+.favori-item-selected {
+	background-color: #226B9A;
+}
+
+.favori-list {
+}
+
+.favori-list-image {
+	width: 80px;
+	margin-left: 10px;
+	display: inline-block;	
+}
+
+.favori-list-name {
+	font-size: 16px;
+	font-weight: bold;
+	vertical-align: top;
+	margin-top: 30px;
+	margin-left: 30px;
+	display: inline-block;	
+}
+
+.favori-list-line {
+	height:1px;
+}
+
+.favori-select {
+}
+
+.favori-select-image {
+	width: 60px;
+	margin-left: 10px;
+	display: inline-block;	
+}
+
+.favori-select-name {
+	font-size: 14px;
+	font-weight: bold;
+	vertical-align: top;
+	margin-top: 18px;
+	margin-left: 20px;
+	display: inline-block;	
+}
+
+.favori-select-button {
+	position: absolute;
+	margin-top: 15px;
+	right: 30px;
+	display: inline-block;
+}
+
+.pref-popup {
+}
+
+.pref-item {
+	width: 220px;
+	height: 50px;
+}
+
+.pref-title {
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+.pref-text {
+	margin-top: 8px;
+	margin-left: 5px;
+	display: inline-block;
+}
+
+.pref-toggle {
+	position: absolute;
+	right: 20px;
+}
+
+.pref-line {
+	height:1px;
+}
+
+.pref-okbutton {
+	margin-left: 30px;
+	margin-right: 20px;
+}
+
+.pref-cancelbutton {
+}

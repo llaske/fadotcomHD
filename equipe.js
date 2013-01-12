@@ -1,5 +1,4 @@
-
-//----------------- Cache Equipe handling
+// Cache Equipe handling
 TeamCache = {};
 
 TeamCache.content = [];
@@ -120,6 +119,8 @@ enyo.kind({
 		this.$.itemImageTeam.setSrc("http://footballamericain.com/images/images/team/100/"+this.team.image);
 		this.$.itemCreation.setContent(this.team.creation);
 		this.$.itemWeb.setContent("<a href='"+this.team.web+"'>"+this.team.web+"</a>");	
+		app.setFavorite(this.team);
+		app.setToolbarDetail({"favbutton": true});
 		History.displayButton();		
 		
 		// Launch matchs request

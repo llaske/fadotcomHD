@@ -15,11 +15,12 @@ enyo.kind({
 					{name: "navncaa", classes: "nav-item", content: "NCAA", ontap: "cmdNCAA"},
 					{name: "navnfl", classes: "nav-item", content: "NFL", ontap: "cmdNFL"},
 					{name: "navmatchs", classes: "nav-item", content: "Scores", ontap: "cmdMatchs"},
-					{name: "navclassements", classes: "nav-item", content: "Classements", ontap: "cmdClassements"}
+					{name: "navclassements", classes: "nav-item", content: "Classements", ontap: "cmdClassements"},
+					{name: "navfavorite", classes: "nav-item", content: "Favoris", ontap: "cmdFavoris"}
 				]},	
 				{kind: "onyx.Toolbar", components: [
 					{content: "", classes: "fitnav-toolbar" },
-					{kind: "onyx.IconButton", src: "images/prefs.png", showing: true, classes: "prefs-button"}					
+					{kind: "onyx.IconButton", src: "images/prefs.png", showing: true, classes: "prefs-button", ontap: "showPref"}
 				]}
 			]},
 			{name: "fitlist", kind: "FittableRows", classes: "fitlist fittable-shadow", ondragover: "dragover", ondragstart: "dragstart", ondrop: "drop", components: [
@@ -28,7 +29,7 @@ enyo.kind({
 					{name: "grabberlist", kind: "onyx.Grabber", ondblclick: "doubleclick"},
 					{name: "spinnerlist", showing: false, kind: "Image", src: "images/spinner-dark.gif", classes: "list-spinner"},
 					{name: "refresh", showing: true, kind: "onyx.IconButton", src: "images/refresh.png", classes: "refresh-button", ontap: "refreshList"},
-					{name: "plus", showing: false, kind: "onyx.IconButton", src: "images/plus.png", classes: "plus-button"}
+					{name: "plus", showing: false, kind: "onyx.IconButton", src: "images/plus.png", classes: "plus-button", ontap: "selectFavorites"}
 				]}
 			]},
 			{name: "fitdetail", kind: "FittableRows", fit: true, classes: "fitdetail fittable-shadow", ondragover: "dragover", ondragstart: "dragstart", ondrop: "drop", components: [
@@ -39,9 +40,10 @@ enyo.kind({
 					{name: "backbutton", kind: "onyx.IconButton", src: "images/back.png", showing: false, classes: "back-button", ontap: "historyBack"},
 					{name: "webbutton", kind: "onyx.IconButton", src: "images/web.png", showing: false, classes: "web-button", ontap: "openWebsite"},
 					{name: "sendbutton", kind: "onyx.IconButton", src: "images/send.png", showing: false, classes: "send-button", ontap: "openMail"},
-					{name: "favbutton", kind: "onyx.ToggleIconButton", src: "images/favorite.png", showing: false, value: true, classes: "fav-button"}					
+					{name: "favbutton", kind: "onyx.ToggleIconButton", src: "images/favorite.png", showing: false, value: false, classes: "fav-button", ontap: "markFavorite"}
 				]}
-			]}
+			]},
+			{name: "pref", kind: "FADotCom.Preferences", onHide: "prefHidden"}
 		]}
 	],
 
@@ -52,7 +54,11 @@ enyo.kind({
 		this.navselection = null;
 		this.toolbarweburl = null;
 		this.toolbarmailurl = null;
+		this.favorite = null;
 		app = this; // HACK: force global setting
+		
+		// Change view depending of preferences
+		this.setNavigationVisibility(Preferences.load());
 		
 		// Select first item
 		this.refresh = this.cmdUne;
@@ -88,37 +94,36 @@ enyo.kind({
 	},
 	
 	viewArticles: function(ligues, index, maxitem) {
-		this.selectItem(index);
-		this.clearPanel(this.$.listcontent);
-		this.clearPanel(this.$.detailcontent);		
-		this.spinnerList(true);
-		this.setToolbarDetail({"sendbutton": false, "webbutton": false, "backbutton": false});
-		this.$.listcontent.createComponent({kind: "FADotCom.Articles", ligues: ligues, maxitem: maxitem}, {owner: this});
-		this.$.listcontent.render();
+		this.showList(index, {kind: "FADotCom.Articles", ligues: ligues, maxitem: maxitem}, true);
 	},
 	
 	// View matchs
 	cmdMatchs: function() {
 		this.refresh = this.cmdMatchs;	
-		this.selectItem("navmatchs");	
-		this.clearPanel(this.$.listcontent);
-		this.clearPanel(this.$.detailcontent);
-		this.spinnerList(true);	
-		this.setToolbarDetail({"sendbutton": false, "webbutton": false, "backbutton": false});		
-		this.$.listcontent.createComponent({kind: "FADotCom.Matchs"}, {owner: this});
-		this.$.listcontent.render();		
+		this.showList("navmatchs", {kind: "FADotCom.Matchs"}, true);	
 	},
 	
-	// View matchs
+	// View scores
 	cmdClassements: function() {
 		this.refresh = this.cmdClassements;	
-		this.selectItem("navclassements");	
-		this.clearPanel(this.$.listcontent);
-		this.clearPanel(this.$.detailcontent);
-		this.spinnerList(true);		
-		this.setToolbarDetail({"sendbutton": false, "webbutton": false, "backbutton": false});		
-		this.$.listcontent.createComponent({kind: "FADotCom.Classements"}, {owner: this});
-		this.$.listcontent.render();		
+		this.showList("navclassements", {kind: "FADotCom.Classements"}, true);	
+	},
+	
+	// View favorites
+	cmdFavoris: function() {
+		this.refresh = this.cmdFavoris;
+		this.showList("navfavorite", {kind: "FADotCom.Favoris"}, true);
+		this.$.plus.show();
+	},
+	
+	selectFavorites: function() {
+		this.spinnerDetail(true);
+		this.showDetail({kind: "FADotCom.FavorisSelect"});
+	},
+	
+	updateFavorites: function() {
+		this.showList("navfavorite", {kind: "FADotCom.Favoris"}, false);	
+		this.$.plus.show();		
 	},
 	
 	// Refresh list
@@ -141,11 +146,29 @@ enyo.kind({
 		}
 	},
 	
+	// Show a new content in the list view
+	showList: function(item, component, cleardetail) {
+		// Select item, clear panel and toolbar
+		this.selectItem(item);	
+		this.clearPanel(this.$.listcontent);
+		if (cleardetail) {
+			this.clearPanel(this.$.detailcontent);
+			History.clean();
+			this.setToolbarDetail({"sendbutton": false, "webbutton": false, "backbutton": false, "favbutton": false});
+		}
+		this.$.plus.hide();
+
+		// Launch processing component
+		this.spinnerList(true);
+		this.$.listcontent.createComponent(component, {owner: this});	
+		this.$.listcontent.render();	
+	},
+	
 	// Show a new content in the detailed view
 	showDetail: function(args) {
 		// Clear panel and hide buttons
 		this.clearPanel(this.$.detailcontent);
-		this.setToolbarDetail({"sendbutton": false, "webbutton": false, "backbutton": false});		
+		this.setToolbarDetail({"sendbutton": false, "webbutton": false, "backbutton": false, "favbutton": false});
 		
 		// Create the detail view using the right class and parameter
 		this.$.detailcontent.createComponent(args, {owner: this});
@@ -175,6 +198,19 @@ enyo.kind({
 			this.$.spinnerdetail.hide();
 	},
 	
+	// Update menu visibility
+	setNavigationVisibility: function(menu) {
+		for(var item in menu) {
+			if (menu[item]) {
+				this.$[item].show();
+			} else {
+				this.$[item].hide();
+				if (this.navselection == this.$[item])
+					this.cmdUne();
+			}
+		}	
+	},
+	
 	// Change button visibility in detail toolbar
 	setToolbarDetail: function(values) {
 		// Get toolbar buttons
@@ -196,7 +232,7 @@ enyo.kind({
 		}
 	},
 	
-	// Handling toolbar button to web, mail and history
+	// Handling toolbar button to web, mail, history and favorites
 	setToolbarWebsite: function(url) {
 		this.toolbarweburl = url;
 	},
@@ -213,8 +249,31 @@ enyo.kind({
 		window.location.href = this.toolbarmailurl;	
 	},
 	
+	setFavorite: function(favorite) {
+		this.favorite = favorite;
+		this.$.favbutton.setValue(TeamFavorites.is(favorite));
+	},
+	
+	markFavorite: function() {
+		if (this.$.favbutton.getValue())
+			TeamFavorites.add(this.favorite);
+		else
+			TeamFavorites.remove(this.favorite);
+		if (this.refresh == this.cmdFavoris)
+			this.updateFavorites();
+	},
+	
 	historyBack: function() {
 		this.showDetail(History.pop());
+	},
+	
+	// Preference handling
+	showPref: function() {
+		this.$.pref.show();
+	},
+	
+	prefHidden: function() {
+		this.$.pref.cancelPref();
 	},
 	
 	// Start dragging a row

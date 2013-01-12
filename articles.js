@@ -75,6 +75,10 @@ enyo.kind({
 	setupItem: function(inSender, inEvent) {
 		// Set item in the template
 		inEvent.item.$.article.setItem(this.data[inEvent.index]);
+		if (this.selection != null && this.selection.item.id == this.data[inEvent.index].id) {
+			inEvent.item.$.article.setSelected(true);
+			this.selection = inEvent.item.$.article;
+		}		
 	},
 	
 	// Article taped

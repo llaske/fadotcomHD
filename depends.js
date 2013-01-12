@@ -1,4 +1,6 @@
 enyo.depends(
+	"$/preferences.js",
+	"$/storage.js",	
 	"$/app.js",
 	"$/articles.js",
 	"$/article_detail.js",	
@@ -6,8 +8,7 @@ enyo.depends(
 	"$/match_detail.js",
 	"$/classements.js",
 	"$/equipe.js",
+	"$/favoris.js",
 	"$/history.js",
-	"$/storage.js",
-	"$/cached_jsonp.js",
-	"$/preferences.js"
+	"$/cached_jsonp.js"
 );
