@@ -146,8 +146,8 @@ enyo.kind({
 	},
 	
 	// Error loading score
-	queryFailScore: function(inSender) {
-		console.log("failed");
+	queryFailScore: function(inSender, inError) {
+		app.error("MATDET"+inError);
 	},
 	
 	// Articles related to match loaded
@@ -162,8 +162,8 @@ enyo.kind({
 	},
 	
 	// Error loading articles
-	queryFailArticle: function(inSender) {
-		console.log("failed");
+	queryFailArticle: function(inSender, inError) {
+		app.error("MATART"+inError);
 	},
 	
 	// Update articles list
@@ -174,7 +174,7 @@ enyo.kind({
 	// Click on an article, show in detail
 	itemClick: function(inSender, inEvent) {
 		var record = this.articles[inEvent.index];
-		console.log("click on "+record.id);	
+		Preferences.log("click on "+record.id);	
 		History.push({kind: "FADotCom.Matchs.Detail", match: this.match, teamdom: this.teamdom, teamext: this.teamext});
 		app.spinnerDetail(true);
 		app.showDetail({kind: "FADotCom.Articles.Detail", record: this.articles[inEvent.index]});
@@ -182,7 +182,7 @@ enyo.kind({
 	
 	// Click on a team, show it in detail
 	clickEquipeDom: function(inSender, inEvent) {
-		console.log("click on team "+this.teamdom.id);
+		Preferences.log("click on team "+this.teamdom.id);
 		History.push({kind: "FADotCom.Matchs.Detail", match: this.match, teamdom: this.teamdom, teamext: this.teamext});
 		app.spinnerDetail(true);
 		app.showDetail({kind: "FADotCom.Equipe", team: this.teamdom});
@@ -190,7 +190,7 @@ enyo.kind({
 
 	// Click on a team, show it in detail
 	clickEquipeExt: function(inSender, inEvent) {
-		console.log("click on team "+this.teamext.id);
+		Preferences.log("click on team "+this.teamext.id);
 		History.push({kind: "FADotCom.Matchs.Detail", match: this.match, teamdom: this.teamdom, teamext: this.teamext});
 		app.spinnerDetail(true);
 		app.showDetail({kind: "FADotCom.Equipe", team: this.teamext});

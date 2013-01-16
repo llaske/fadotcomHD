@@ -61,7 +61,7 @@ enyo.kind({
 	},
 	
 	// Error loading
-	queryFail: function(inSender) {
-		console.log("failed");
+	queryFail: function(inSender, inError) {
+		app.error("ARTDET"+inError);
 	}		
 });

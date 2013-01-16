@@ -108,8 +108,8 @@ enyo.kind({
 	},
 	
 	// Data error
-	queryFail: function(inSender) {
-		console.log("failed");
+	queryFail: function(inSender, inError) {
+		app.error("CLSLST"+inError);
 	},	
 	
 	// Set value in rows

@@ -43,7 +43,13 @@ enyo.kind({
 					{name: "favbutton", kind: "onyx.ToggleIconButton", src: "images/favorite.png", showing: false, value: false, classes: "fav-button", ontap: "markFavorite"}
 				]}
 			]},
-			{name: "pref", kind: "FADotCom.Preferences", onHide: "prefHidden"}
+			{name: "pref", kind: "FADotCom.Preferences", onHide: "prefHidden"},
+			{name: "error", classes: "error-popup", kind: "onyx.Popup", centered: true, modal: true, floating: true, components: [
+				{content: "ERREUR :-(", classes: "error-title"}, {tag: "hr"},
+				{content: "Ooops, une erreur est survenue...", classes: "error-message"},
+				{content: "V\xE9rifiez votre connexion Internet et r\xE9essayez ult\xE9rieurement.", classes: "error-message"},
+				{name: "errorcode", classes: "error-code"}
+			]}			
 		]}
 	],
 
@@ -150,9 +156,9 @@ enyo.kind({
 	showList: function(item, component, cleardetail) {
 		// Select item, clear panel and toolbar
 		this.selectItem(item);	
-		this.clearPanel(this.$.listcontent);
+		this.clearPanel(this.$.listcontent, false);
 		if (cleardetail) {
-			this.clearPanel(this.$.detailcontent);
+			this.clearPanel(this.$.detailcontent, true);
 			History.clean();
 			this.setToolbarDetail({"sendbutton": false, "webbutton": false, "backbutton": false, "favbutton": false});
 		}
@@ -167,7 +173,7 @@ enyo.kind({
 	// Show a new content in the detailed view
 	showDetail: function(args) {
 		// Clear panel and hide buttons
-		this.clearPanel(this.$.detailcontent);
+		this.clearPanel(this.$.detailcontent, false);
 		this.setToolbarDetail({"sendbutton": false, "webbutton": false, "backbutton": false, "favbutton": false});
 		
 		// Create the detail view using the right class and parameter
@@ -176,9 +182,12 @@ enyo.kind({
 	},
 	
 	// Util function, destroy all controls in the panel
-	clearPanel: function(panel) {
+	clearPanel: function(panel, empty) {
 		var controls = panel.getControls();
 		for (var i = 0, c; c = controls[i]; i++) c.destroy();
+		if (panel == this.$.detailcontent && empty) {
+			this.$.detailcontent.createComponent({components:[{kind: "Image", src: "images/fadotcom_bg.jpg", classes: "fadotcom-bg"}]}, {owner: this});
+		}
 		panel.render();
 	},
 	
@@ -264,6 +273,7 @@ enyo.kind({
 	},
 	
 	historyBack: function() {
+		this.spinnerDetail(true);
 		this.showDetail(History.pop());
 	},
 	
@@ -274,6 +284,14 @@ enyo.kind({
 	
 	prefHidden: function() {
 		this.$.pref.cancelPref();
+	},
+	
+	// Process error
+	error: function(code) {
+		this.$.errorcode.setContent(code);
+		this.$.error.show();
+		this.spinnerDetail(false);
+		this.spinnerList(false);
 	},
 	
 	// Start dragging a row

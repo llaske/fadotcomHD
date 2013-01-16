@@ -16,7 +16,17 @@ Preferences.defaultmenu = {
 };
 Preferences.storage = null;
 Preferences.unemaxitems = 6;
+Preferences.matchseasoncount = 16;
+Preferences.debug = false;
 
+// Log
+Preferences.log = function(message) {
+	if (Preferences.debug)
+		console.log(message);
+}
+
+
+// Load preferences
 Preferences.load = function() {
 	if (this.storage == null)
 		this.storage = new FADotCom.LocalStorage();
@@ -29,6 +39,7 @@ Preferences.load = function() {
 	return this.menu;
 }
 
+// Save preferences
 Preferences.save = function() {
 	if (this.storage == null)
 		this.storage = new FADotCom.LocalStorage();

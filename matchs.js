@@ -74,7 +74,7 @@ enyo.kind({
 			},
 			
 			function(context) {
-				console.log("failed");			
+				app.error("TEALST");			
 			},
 			
 			this
@@ -82,8 +82,8 @@ enyo.kind({
 	},
 	
 	// Error loading match
-	queryFailMatch: function(inSender) {
-		console.log("failed");
+	queryFailMatch: function(inSender, inError) {
+		app.error("MATLST"+inError);
 	},
 	
 	// Change selection
@@ -114,7 +114,7 @@ enyo.kind({
 	// Match taped
 	taped: function(inSender, inEvent) {
 		this.selectItem(this.$.matchsList.children[inEvent.index].$.match);
-		console.log("click on "+this.data[inEvent.index].id);	
+		Preferences.log("click on "+this.data[inEvent.index].id);	
 		app.spinnerDetail(true);		
 		app.showDetail({kind: "FADotCom.Matchs.Detail", 
 			match: this.data[inEvent.index],

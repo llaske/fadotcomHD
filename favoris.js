@@ -100,7 +100,7 @@ enyo.kind({
 	// Favori taped
 	taped: function(inSender, inEvent) {
 		this.selectItem(this.$.favorisList.children[inEvent.index].$.favori);
-		console.log("click on team "+this.data[inEvent.index].id);	
+		Preferences.log("click on team "+this.data[inEvent.index].id);	
 		app.spinnerDetail(true);
 		app.showDetail({kind: "FADotCom.Equipe", team: this.data[inEvent.index]});
 	}	
@@ -180,9 +180,9 @@ enyo.kind({
 		app.spinnerDetail(false);
 	},
 	
-	// Error from database, TODO
+	// Error from database
 	queryFail: function(inSender, inError) {
-		console.log("failed");
+		app.error("FAVTEA"+inError);
 	},
 	
 	// Init setup for a line
@@ -204,10 +204,10 @@ enyo.kind({
 	classes: "favori-item",
 	published: { team: null },
 	components: [
-		{kind: enyo.Control, classes: "favori-select", components: [
+		{kind: enyo.Control, classes: "favori-select", ontap: "toggleFavorite", components: [
 			{name: "itemImage", classes: "favori-select-image", kind: "Image" },
 			{name: "itemName", classes: "favori-select-name" },
-			{name: "favbutton", kind: "onyx.ToggleIconButton", src: "images/favorite.png", showing: true, value: false, classes: "favori-select-button", ontap: "markFavorite"}
+			{name: "favbutton", kind: "onyx.ToggleIconButton", src: "images/favorite.png", showing: true, value: false, classes: "favori-select-button", ontap: "toggleFavorite"}
 		]}
 	],
 
@@ -225,11 +225,13 @@ enyo.kind({
 		this.$.favbutton.setValue(TeamFavorites.is(this.team));
 	},
 	
-	markFavorite: function() {
+	// Toggle favorite value
+	toggleFavorite: function(inSender, inEvent) {
+		this.$.favbutton.setValue(!this.$.favbutton.getValue());
 		if (this.$.favbutton.getValue())
 			TeamFavorites.add(this.team);
 		else
 			TeamFavorites.remove(this.team);
-		app.updateFavorites();	
+		app.updateFavorites();
 	}
 });

@@ -58,6 +58,8 @@ enyo.kind({
 	queryResponse: function(inSender, inResponse) {
 		// Different from cache, store articles and redisplay it
 		if (!inSender.cached) {
+			if (typeof this.$.articlesList === "undefined")
+				return;		
 			this.data = inResponse;
 			this.$.articlesList.setCount(this.maxitem == -1 ? this.data.length : this.maxitem);
 		}
@@ -66,9 +68,9 @@ enyo.kind({
 		app.spinnerList(false);
 	},
 	
-	// Error from database, TODO
+	// Error from database
 	queryFail: function(inSender, inError) {
-		console.log("failed");
+		app.error("ARTLST"+inError);
 	},
 	
 	// Init setup for a line
@@ -84,7 +86,7 @@ enyo.kind({
 	// Article taped
 	taped: function(inSender, inEvent) {
 		this.selectItem(this.$.articlesList.children[inEvent.index].$.article);
-		console.log("click on "+this.data[inEvent.index].id);	
+		Preferences.log("click on "+this.data[inEvent.index].id);	
 		app.spinnerDetail(true);
 		app.showDetail({kind: "FADotCom.Articles.Detail", record: this.data[inEvent.index]});
 	}

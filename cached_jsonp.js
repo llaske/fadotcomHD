@@ -37,7 +37,7 @@ enyo.kind({
 			this.cache = this.storage.getValue(this.url);
 			if (this.cache != null) {
 				// Found in the cache
-				console.log("get in cache "+this.url);
+				Preferences.log("get in cache "+this.url);
 				this.cached = true;
 				this.cachedresponse_callback(this, this.cache);
 			}
@@ -56,18 +56,18 @@ enyo.kind({
 		if (!same) {
 			if (this.cache == null) {
 				if (this.nocache)
-					console.log("no cache asked for "+this.url);
+					Preferences.log("no cache asked for "+this.url);
 				else
-					console.log("result not in the cache "+this.url);
+					Preferences.log("result not in the cache "+this.url);
 			} else
-				console.log("result dont match the cache "+this.url);
+				Preferences.log("result dont match the cache "+this.url);
 			this.storage.setValue(this.url, inResponse);
 			this.cached = false;
 		}
 		
 		// Same that the cache, do nothing
 		else {
-			console.log("same result already in the cache "+this.url);
+			Preferences.log("same result already in the cache "+this.url);
 			this.cached = true;
 		}
 		
