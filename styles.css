@@ -34,6 +34,11 @@
 	right: 30px;
 }
 
+.switchview-button {
+	position: absolute;
+	left: 100px;
+}
+
 .back-button {
 	position: absolute;
 	left: 100px;

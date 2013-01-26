@@ -1,5 +1,9 @@
 // FA.com mobile tablet version
 
+// Constants
+var leftButton = "images/left.png";
+var rightButton = "images/right.png";
+
 // Main app class
 enyo.kind({
 	name: "FADotCom.TabletApp",
@@ -37,6 +41,7 @@ enyo.kind({
 				{name: "toolbardetail", kind: "onyx.Toolbar", components: [
 					{name: "grabberdetail", kind: "onyx.Grabber", ondblclick: "doubleclick"},
 					{name: "spinnerdetail", showing: false, kind: "Image", src: "images/spinner-dark.gif", classes: "list-spinner"},
+					{name: "viewswitch", kind: "Image", src: rightButton, classes: "switchview-button", ontap: "switchView" },
 					{name: "backbutton", kind: "onyx.IconButton", src: "images/back.png", showing: false, classes: "back-button", ontap: "historyBack"},
 					{name: "webbutton", kind: "onyx.IconButton", src: "images/web.png", showing: false, classes: "web-button", ontap: "openWebsite"},
 					{name: "sendbutton", kind: "onyx.IconButton", src: "images/send.png", showing: false, classes: "send-button", ontap: "openMail"},
@@ -294,6 +299,22 @@ enyo.kind({
 		this.spinnerList(false);
 	},
 	
+	// Switch between 3-column view and 1-column view
+	switchView: function() {
+		if (this.$.viewswitch.src != leftButton) {	
+			this.$.fitlist.hide();
+			this.$.fitnav.hide();		
+			this.$.viewswitch.setSrc(leftButton);
+		} else {
+			this.$.fitlist.applyStyle("width", this.fitlistinitsize+"px");
+			this.$.fitlist.show();
+			this.$.fitnav.applyStyle("width", this.fitnavinitsize+"px");			
+			this.$.fitnav.show();		
+			this.$.viewswitch.setSrc(rightButton);
+		}
+		this.resized();			
+	},
+	
 	// Start dragging a row
 	dragstart: function(s, e) {
 		// Reming the dragging object
@@ -356,10 +377,12 @@ enyo.kind({
 		} else if (this.dragobject == "fitdetail") {
 			if (this.dragx < 0) {
 				this.$.fitlist.hide();
-				this.$.fitnav.hide();			
+				this.$.fitnav.hide();
+				this.$.viewswitch.setSrc(leftButton);
 			} else {
 				this.$.fitlist.applyStyle("width", this.fitlistinitsize+"px");
-				this.$.fitlist.show();			
+				this.$.fitlist.show();	
+				this.$.viewswitch.setSrc(rightButton);				
 			}
 			this.resized();				
 		}
