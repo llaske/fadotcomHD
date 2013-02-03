@@ -20,4 +20,11 @@
 	<icon src="images/facom72x72.png" gap:platform="android" gap:density="hdpi" />	
 	<icon src="images/facom57x57.png" gap:platform="ios" width="57" height="57" />
     <icon src="images/facom72x72.png" gap:platform="ios" width="72" height="72" />	
+	
+	<gap:splash src="images/facom_splash200x320.png" gap:platform="android" gap:density="ldpi" width="200" height="320" />
+	<gap:splash src="images/facom_splash320x200.png" gap:platform="android" gap:density="ldpi" width="320" height="200" />
+	<gap:splash src="images/facom_splash320x480.png" gap:platform="android" gap:density="mdpi" width="320" height="480" />
+	<gap:splash src="images/facom_splash480x320.png" gap:platform="android" gap:density="mdpi" width="480" height="320" />
+	<gap:splash src="images/facom_splash480x800.png" gap:platform="android" gap:density="hdpi" width="480" height="800" />	
+	<gap:splash src="images/facom_splash800x480.png" gap:platform="android" gap:density="hdpi" width="800" height="480" />	
 </widget>
