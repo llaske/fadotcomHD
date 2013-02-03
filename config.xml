@@ -2,7 +2,7 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.footballamericain.hd"
-        version   = "0.9.0">
+        version   = "0.9.1">
     <name>Football Americain HD</name>
 
     <description>
@@ -14,4 +14,10 @@
     </author>
 
     <icon src="images/facom57x57.png" />
+	<icon src="images/facom64x64.png" gap:platform="webos" />	
+	<icon src="images/facom72x72.png" gap:platform="webos" />	
+	<icon src="images/facom48x48.png" gap:platform="android" gap:density="mdpi" />	
+	<icon src="images/facom72x72.png" gap:platform="android" gap:density="hdpi" />	
+	<icon src="images/facom57x57.png" gap:platform="ios" width="57" height="57" />
+    <icon src="images/facom72x72.png" gap:platform="ios" width="72" height="72" />	
 </widget>
