@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns     = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        id        = "com.footballamericain.hd"
+        version   = "0.9.0">
+    <name>Football Americain HD</name>
+
+    <description>
+        Retrouvez votre site d'actualité préféré sur le Football Américain dans sa version tablet. Au programme : actualité NFL, FFFA et Elite, scores, classements et franchises NFL. Le meilleur du Football Américain en français..
+    </description>
+
+    <author href="http://www.footballamericain.com" email="lionel.laske@gmail.com">
+        Lionel Laské pour FootballAmericain.com
+    </author>
+
+    <icon src="images/facom57x57.png" />
+</widget>
