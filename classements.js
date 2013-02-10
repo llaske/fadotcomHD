@@ -21,13 +21,15 @@ enyo.kind({
 	cmdAFC: function() {
 		this.selectItem(0);
 		app.spinnerDetail(true);		
-		app.showDetail({kind: "FADotCom.Classements.Detail", conference: "AFC"});	
+		app.showDetail({kind: "FADotCom.Classements.Detail", conference: "AFC"});
+		Stats.trace("/tablet/classements/AFC");
 	},
 	
 	cmdNFC: function() {
 		this.selectItem(1);
 		app.spinnerDetail(true);		
-		app.showDetail({kind: "FADotCom.Classements.Detail", conference: "NFC"});		
+		app.showDetail({kind: "FADotCom.Classements.Detail", conference: "NFC"});
+		Stats.trace("/tablet/classements/NFC");		
 	},
 	
 	// Handle selection

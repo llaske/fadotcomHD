@@ -67,6 +67,8 @@ enyo.kind({
 		this.toolbarmailurl = null;
 		this.favorite = null;
 		app = this; // HACK: force global setting
+		Stats.init();
+		Stats.trace("/tablet/home");
 		
 		// Change view depending of preferences
 		this.setNavigationVisibility(Preferences.load());
@@ -86,21 +88,25 @@ enyo.kind({
 	// View articles
 	cmdUne: function() {
 		this.refresh = this.cmdUne;	
+		Stats.trace("/tablet/une");		
 		this.viewArticles("1,2,3", "navune", Preferences.unemaxitems);
 	},
 	
 	cmdElite: function() {
 		this.refresh = this.cmdElite;	
+		Stats.trace("/tablet/elite");		
 		this.viewArticles("3", "navelite", -1);
 	},
 	
 	cmdNCAA: function() {
 		this.refresh = this.cmdNCAA;	
+		Stats.trace("/tablet/ncaa");
 		this.viewArticles("2", "navncaa", -1);
 	},
 	
 	cmdNFL: function() {
 		this.refresh = this.cmdNFL;	
+		Stats.trace("/tablet/nfl");
 		this.viewArticles("1", "navnfl", -1);
 	},
 	
@@ -111,18 +117,21 @@ enyo.kind({
 	// View matchs
 	cmdMatchs: function() {
 		this.refresh = this.cmdMatchs;	
+		Stats.trace("/tablet/scores");
 		this.showList("navmatchs", {kind: "FADotCom.Matchs"}, true);	
 	},
 	
 	// View scores
 	cmdClassements: function() {
 		this.refresh = this.cmdClassements;	
+		Stats.trace("/tablet/classements");
 		this.showList("navclassements", {kind: "FADotCom.Classements"}, true);	
 	},
 	
 	// View favorites
 	cmdFavoris: function() {
 		this.refresh = this.cmdFavoris;
+		Stats.trace("/tablet/favoris");
 		this.showList("navfavorite", {kind: "FADotCom.Favoris"}, true);
 		this.$.plus.show();
 	},

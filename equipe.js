@@ -98,6 +98,7 @@ enyo.kind({
 		this.teams = [];
 		this.count = 0;
 		this.teamChanged();
+		Stats.trace("/tablet/team/"+this.team.id);		
 	},
 	
 	// Team init, get team info and launch articles and matchs requests

@@ -18,6 +18,7 @@ enyo.kind({
 		this.inherited(arguments);
 		this.data = [];		
 		this.recordChanged();
+		Stats.trace("/tablet/article/"+this.record.id);
 	},
 	
 	// Init content with already known values and with database

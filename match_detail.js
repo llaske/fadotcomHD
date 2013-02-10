@@ -65,6 +65,7 @@ enyo.kind({
 		this.matchChanged();
 		this.teamdomChanged();
 		this.teamextChanged();
+		Stats.trace("/tablet/match/"+this.match.id);
 	},
 	
 	// Set team dom info

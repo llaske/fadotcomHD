@@ -11,5 +11,6 @@ enyo.depends(
 	"$/equipe_matchs.js",
 	"$/favoris.js",
 	"$/history.js",
-	"$/cached_jsonp.js"
+	"$/cached_jsonp.js",
+	"$/analytics.js"
 );

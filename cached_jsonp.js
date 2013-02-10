@@ -51,7 +51,7 @@ enyo.kind({
 	callback: function(inSender, inResponse) {
 		// Compare object with the cache
 		var same = (this.cache != null) && compare_objects(this.cache, inResponse);
-		
+
 		// Not the same, set in cache launch callback
 		if (!same) {
 			if (this.cache == null) {
@@ -93,12 +93,14 @@ var compare_objects = function (obj1, obj2){
     };
  
     for(parameter_name in obj1){
+		if (parameter_name == 0) continue;
         if(typeof obj2[parameter_name] === "undefined" || !compare(obj1, obj2, parameter_name)){
             return false;
         }
     }
  
     for(parameter_name in obj2){
+		if (parameter_name == 0) continue;
         if(typeof obj1[parameter_name] === "undefined" || !compare(obj1, obj2, parameter_name)){
             return false;
         }        
