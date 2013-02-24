@@ -126,6 +126,6 @@ enyo.kind({
 			this.addClass("article-item-selected");
 		else
 			this.removeClass("article-item-selected");			
-	},
+	}
 });
 

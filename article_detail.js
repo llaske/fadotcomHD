@@ -32,7 +32,7 @@ enyo.kind({
 		// Get detailed info
 		var ws = new enyo.JsonpRequest({
 			url: Preferences.backoffice + "fa_articles_contenu.php?id=" + this.record.id,
-			callbackName: "callback",
+			callbackName: "callback"
 		});
 		ws.response(enyo.bind(this, "queryResponse"));
 		ws.error(enyo.bind(this, "queryFail"));

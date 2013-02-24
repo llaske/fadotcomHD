@@ -115,7 +115,7 @@ enyo.kind({
 		this.matchsLoaded = false;	
 		var ws = new enyo.JsonpRequest({
 			url: Preferences.backoffice + "fa_matchs.php?ligue=1&equipe=" + this.team.id,
-			callbackName: "callback",
+			callbackName: "callback"
 		});
 		ws.response(enyo.bind(this, "queryResponseMatch"));
 		ws.error(enyo.bind(this, "queryFailMatch"));
@@ -125,7 +125,7 @@ enyo.kind({
 		this.articlesLoaded = false;		
 		ws = new enyo.JsonpRequest({
 			url: Preferences.backoffice + "fa_articles.php?equipe=" + this.team.id,
-			callbackName: "callback",
+			callbackName: "callback"
 		});
 		ws.response(enyo.bind(this, "queryResponseArticle"));
 		ws.error(enyo.bind(this, "queryFailArticle"));

@@ -163,7 +163,7 @@ enyo.kind({
 		// Load all teams
 		ws = new enyo.JsonpRequest({
 			url: Preferences.backoffice + "fa_equipes.php?id=0,1,2,3",
-			callbackName: "callback",
+			callbackName: "callback"
 		});
 		ws.response(enyo.bind(this, "queryResponse"));
 		ws.error(enyo.bind(this, "queryFail"));

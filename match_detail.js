@@ -89,7 +89,7 @@ enyo.kind({
 		// Get score info
 		var ws = new enyo.JsonpRequest({
 			url: Preferences.backoffice + "fa_matchs_scores.php?id=" + this.match.id,
-			callbackName: "callback",
+			callbackName: "callback"
 		});
 		ws.response(enyo.bind(this, "queryResponseScore"));
 		ws.error(enyo.bind(this, "queryFailScore"));
@@ -98,7 +98,7 @@ enyo.kind({
 		// Get articles
 		ws = new enyo.JsonpRequest({
 			url: Preferences.backoffice + "fa_articles.php?match=" + this.match.id,
-			callbackName: "callback",
+			callbackName: "callback"
 		});
 		ws.response(enyo.bind(this, "queryResponseArticle"));
 		ws.error(enyo.bind(this, "queryFailArticle"));

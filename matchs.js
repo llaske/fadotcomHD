@@ -21,7 +21,7 @@ enyo.kind({
 		// Get matchs
 		var ws = new Cached.JsonpRequest({
 			url: Preferences.backoffice + "fa_matchs.php?ligue=1",
-			callbackName: "callback",
+			callbackName: "callback"
 		});
 		ws.setResponse(enyo.bind(this, "queryResponseMatch"));
 		ws.setCachedResponse(enyo.bind(this, "queryCachedResponseMatch"));		

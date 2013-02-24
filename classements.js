@@ -83,7 +83,7 @@ enyo.kind({
 		this.nfc = [];		
 		var ws = new enyo.JsonpRequest({
 			url: Preferences.backoffice + "fa_classements.php?ligue=1",
-			callbackName: "callback",
+			callbackName: "callback"
 		});
 		ws.response(enyo.bind(this, "queryResponse"));
 		ws.error(enyo.bind(this, "queryFail"));
