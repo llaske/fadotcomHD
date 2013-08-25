@@ -37,6 +37,15 @@ enyo.kind({
 		ws.response(enyo.bind(this, "queryResponse"));
 		ws.error(enyo.bind(this, "queryFail"));
 		ws.go();
+		
+		// Get comments
+		ws = new enyo.JsonpRequest({
+			url: Preferences.backoffice + "fa_articles_comments.php?id=" + this.record.id,
+			callbackName: "callback"
+		});
+		ws.response(enyo.bind(this, "commentResponse"));
+		ws.error(enyo.bind(this, "commentFail"));
+		ws.go();	
 	},
 	
 	// Get response value
@@ -57,12 +66,22 @@ enyo.kind({
 		app.setToolbarWebsite("http://www.footballamericain.com"+this.record.urlsite);
 		var content = this.record.resume + "\n\n" + "http://www.footballamericain.com"+this.record.urlsite;
 		app.setToolbarMailto("mailto:?subject="+encodeURIComponent(this.record.titre)+"&body="+encodeURIComponent(content));
-		app.setToolbarDetail({"sendbutton": true, "webbutton": true});	
+		app.setToolbarDetail({"sendbutton": true, "webbutton": true, "commentbutton": true, "commentnumber": true});	
 		History.displayButton();
 	},
 	
-	// Error loading
+	// Error loading content
 	queryFail: function(inSender, inError) {
 		app.error("ARTDET"+inError);
-	}		
+	},
+		
+	// Get comments value
+	commentResponse: function(inSender, inResponse) {
+		app.setToolbarComment(inResponse.length, "http://www.footballamericain.com"+this.record.urlsite+"#trackback");
+	},
+	
+	// Error loading comment
+	commentFail: function(inSender, inError) {
+		app.error("ARTCOM"+inError);
+	}
 });

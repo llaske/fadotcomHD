@@ -43,6 +43,8 @@ enyo.kind({
 					{name: "spinnerdetail", showing: false, kind: "Image", src: "images/spinner-dark.gif", classes: "list-spinner"},
 					{name: "viewswitch", kind: "Image", src: rightButton, classes: "switchview-button", ontap: "switchView" },
 					{name: "backbutton", kind: "onyx.IconButton", src: "images/back.png", showing: false, classes: "back-button", ontap: "historyBack"},
+					{name: "commentbutton", kind: "onyx.IconButton", src: "images/comment.png", showing: false, classes: "comment-button", ontap: "openComment"},
+					{name: "commentnumber", content: "00", classes: "comment-number", showing: false },
 					{name: "webbutton", kind: "onyx.IconButton", src: "images/web.png", showing: false, classes: "web-button", ontap: "openWebsite"},
 					{name: "sendbutton", kind: "onyx.IconButton", src: "images/send.png", showing: false, classes: "send-button", ontap: "openMail"},
 					{name: "favbutton", kind: "onyx.ToggleIconButton", src: "images/favorite.png", showing: false, value: false, classes: "fav-button", ontap: "markFavorite"}
@@ -64,6 +66,7 @@ enyo.kind({
 		this.inherited(arguments); 
 		this.navselection = null;
 		this.toolbarweburl = null;
+		this.toolbarcommenturl = null;
 		this.toolbarmailurl = null;
 		this.favorite = null;
 		app = this; // HACK: force global setting
@@ -174,7 +177,7 @@ enyo.kind({
 		if (cleardetail) {
 			this.clearPanel(this.$.detailcontent, true);
 			History.clean();
-			this.setToolbarDetail({"sendbutton": false, "webbutton": false, "backbutton": false, "favbutton": false});
+			this.setToolbarDetail({"sendbutton": false, "commentbutton": false, "commentnumber": false, "webbutton": false, "backbutton": false, "favbutton": false});
 		}
 		this.$.plus.hide();
 
@@ -188,7 +191,7 @@ enyo.kind({
 	showDetail: function(args) {
 		// Clear panel and hide buttons
 		this.clearPanel(this.$.detailcontent, false);
-		this.setToolbarDetail({"sendbutton": false, "webbutton": false, "backbutton": false, "favbutton": false});
+		this.setToolbarDetail({"sendbutton": false, "commentbutton": false, "commentnumber": false, "webbutton": false, "backbutton": false, "favbutton": false});
 		
 		// Create the detail view using the right class and parameter
 		this.$.detailcontent.createComponent(args, {owner: this});
@@ -260,12 +263,21 @@ enyo.kind({
 		this.toolbarweburl = url;
 	},
 	
+	setToolbarComment: function(number, url) {
+		this.toolbarcommenturl = url;
+		this.$.commentnumber.setContent(number);
+	},
+
 	setToolbarMailto: function(url) {
 		this.toolbarmailurl = url;
 	},
 	
 	openWebsite: function() {
 		window.open(this.toolbarweburl);
+	},
+	
+	openComment: function() {
+		window.open(this.toolbarcommenturl);
 	},
 	
 	openMail: function() {
