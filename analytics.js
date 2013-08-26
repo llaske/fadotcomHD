@@ -26,7 +26,7 @@ Stats.trace = function(page) {
 	req.handleAs = "text";
 	
 	// Set trace info
-	req.postBody = "v=1&tid=UA-38419451-1&cid="+this.cid+"&t=pageview&dp="+encodeURIComponent(page);
+	req.postBody = "v=1&tid=UA-18664661-1&cid="+this.cid+"&t=pageview&dp="+encodeURIComponent(page);
 	req.go();
 }
 
