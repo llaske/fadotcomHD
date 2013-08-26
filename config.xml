@@ -13,6 +13,8 @@
         Lionel Laské pour FootballAmericain.com
     </author>
 
+	<preference name="permissions" value="none"/>
+	
     <icon src="images/facom57x57.png" />
 	<icon src="images/facom64x64.png" gap:platform="webos" />	
 	<icon src="images/facom72x72.png" gap:platform="webos" />	
