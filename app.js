@@ -44,7 +44,7 @@ enyo.kind({
 					{name: "viewswitch", kind: "Image", src: rightButton, classes: "switchview-button", ontap: "switchView" },
 					{name: "backbutton", kind: "onyx.IconButton", src: "images/back.png", showing: false, classes: "back-button", ontap: "historyBack"},
 					{name: "commentbutton", kind: "onyx.IconButton", src: "images/comment.png", showing: false, classes: "comment-button", ontap: "openComment"},
-					{name: "commentnumber", content: "00", classes: "comment-number", showing: false },
+					{name: "commentnumber", content: "00", classes: "comment-number", showing: false, ontap: "openComment" },
 					{name: "webbutton", kind: "onyx.IconButton", src: "images/web.png", showing: false, classes: "web-button", ontap: "openWebsite"},
 					{name: "sendbutton", kind: "onyx.IconButton", src: "images/send.png", showing: false, classes: "send-button", ontap: "openMail"},
 					{name: "favbutton", kind: "onyx.ToggleIconButton", src: "images/favorite.png", showing: false, value: false, classes: "fav-button", ontap: "markFavorite"}
