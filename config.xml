@@ -2,7 +2,7 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.footballamericain.hd"
-        version   = "1.0.0">
+        version   = "1.1.0">
     <name>Football Americain HD</name>
 
     <description>
@@ -13,15 +13,23 @@
         Lionel Laské pour FootballAmericain.com
     </author>
 
-	<preference name="permissions" value="none"/>
+	<access origin="*" />
+	<allow-navigation href="*" />
+	<allow-intent href="http://*/*" />
 	
 	<preference name="android-minSdkVersion" value="13" />	
 	
-    <icon src="images/facom57x57.png" />
+    <icon src="icon.png" />
+	<platform name="android">
+		<icon gap:density="ldpi" src="images/facom36x36.png" />
+		<icon gap:density="mdpi" src="images/facom48x48.png" />
+		<icon gap:density="hdpi" src="images/facom72x72.png" />
+		<icon gap:density="xhdpi" src="images/facom96x96.png" />	
+		<icon gap:density="xxhdpi" src="images/facom144x144.png" />	
+		<icon gap:density="xxxhdpi" src="images/facom192x192.png" />
+	</platform>
 	<icon src="images/facom64x64.png" gap:platform="webos" />	
-	<icon src="images/facom72x72.png" gap:platform="webos" />	
-	<icon src="images/facom48x48.png" gap:platform="android" gap:density="mdpi" />	
-	<icon src="images/facom72x72.png" gap:platform="android" gap:density="hdpi" />	
+	<icon src="images/facom72x72.png" gap:platform="webos" />
 	<icon src="images/facom57x57.png" gap:platform="ios" width="57" height="57" />
     <icon src="images/facom72x72.png" gap:platform="ios" width="72" height="72" />	
 </widget>

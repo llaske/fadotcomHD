@@ -25,7 +25,7 @@ enyo.kind({
 	liguesChanged: function() {
 		// Get articles from backoffice
 		var ws = new Cached.JsonpRequest({
-			url: Preferences.backoffice + "fa_articles.php?ligue=" + this.ligues,
+			url: Preferences.backoffice + "fa_articles.php" + (this.ligues == "1,2,3" ? "" : "?ligue=" + this.ligues),
 			callbackName: "callback"
 		});
 		ws.setResponse(enyo.bind(this, "queryResponse"));

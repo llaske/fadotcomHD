@@ -11,8 +11,8 @@ enyo.kind({
 	fit: false,
 	components: [
 		{kind: "Image", src: "images/fadotcom-title.png", classes: "fadotcom-title"},
-		{kind: "FittableColumns", classes: "fitscreen enyo-fit", components: [
-			{name: "fitnav", kind: "FittableRows", classes: "fitnav",  ondragover: "dragover", ondrop: "drop", components: [
+		{kind: "FittableColumns", classes: "fitscreen enyo-fit", onresize: "screenresized", components: [
+			{name: "fitnav", kind: "FittableRows", classes: "fitnav", ondragover: "dragover", ondrop: "drop", components: [
 				{name: "navitems", fit: true, components: [
 					{name: "navune", classes: "nav-item", content: "A la une", ontap: "cmdUne"},
 					{name: "navelite", classes: "nav-item", content: "Elite", ontap: "cmdElite"},
@@ -38,7 +38,7 @@ enyo.kind({
 			]},
 			{name: "fitdetail", kind: "FittableRows", fit: true, classes: "fitdetail fittable-shadow", ondragover: "dragover", ondragstart: "dragstart", ondrop: "drop", components: [
 				{kind: "Panels", fit: true, name: "detailcontent", components: []},
-				{name: "toolbardetail", kind: "onyx.Toolbar", components: [
+				{name: "toolbardetail", kind: "onyx.Toolbar", onresize: "detailresized", components: [
 					{name: "grabberdetail", kind: "onyx.Grabber", ondblclick: "doubleclick"},
 					{name: "spinnerdetail", showing: false, kind: "Image", src: "images/spinner-dark.gif", classes: "list-spinner"},
 					{name: "viewswitch", kind: "Image", src: rightButton, classes: "switchview-button", ontap: "switchView" },
@@ -327,6 +327,7 @@ enyo.kind({
 			this.$.fitnav.hide();		
 			this.$.viewswitch.setSrc(leftButton);
 		} else {
+			if (document.getElementById("body").offsetWidth < 1024) return;
 			this.$.fitlist.applyStyle("width", this.fitlistinitsize+"px");
 			this.$.fitlist.show();
 			this.$.fitnav.applyStyle("width", this.fitnavinitsize+"px");			
@@ -390,7 +391,7 @@ enyo.kind({
 		if (this.dragobject == "fitlist") {
 			if (this.dragx < 0) {
 				this.$.fitnav.hide();
-			} else {
+			} else if (document.getElementById("body").offsetWidth >= 1024) {
 				this.$.fitnav.applyStyle("width", this.fitnavinitsize+"px");	
 				this.$.fitnav.show();
 			}
@@ -435,5 +436,25 @@ enyo.kind({
 			}
 			this.resized();				
 		}
+	},
+	
+	// Handle screen resizing, hide navbar if screen is too small
+	screenresized: function() {
+		var body_width = document.getElementById("body").offsetWidth;
+		if (body_width < 1024 && this.$.fitnav.showing) {
+			this.$.fitnav.hide();
+			this.$.fitlist.show();
+			this.$.fitlist.render();
+			this.$.fitdetail.applyStyle("width", (body_width-this.fitlistinitsize)+"px");
+			this.$.fitdetail.show();
+			this.$.fitdetail.render();
+		}
+	},
+
+	// Handle detail resizing, hide action button if size is too small
+	detailresized: function() {
+		if (this.$.detailcontent.getControls()[0].kind != "FADotCom.Articles.Detail") return;
+		var sizeok = this.$.fitdetail.getBounds().width > 375;
+		this.setToolbarDetail({"sendbutton": sizeok, "commentbutton": sizeok, "commentnumber": sizeok, "webbutton": sizeok});
 	}
 });

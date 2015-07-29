@@ -1,7 +1,7 @@
 Preferences = {};
 
 Preferences.backoffice = "http://m.footballamericain.com/backoffice/v2/";
-//Preferences.backoffice = "http://localhost/mobile/backoffice/";
+//Preferences.backoffice = "http://localhost:81/mobile/backoffice/";
 
 Preferences.key = Preferences.backoffice + "preferences";
 Preferences.menu = null;
