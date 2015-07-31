@@ -273,11 +273,11 @@ enyo.kind({
 	},
 	
 	openWebsite: function() {
-		window.open(this.toolbarweburl);
+		window.open(this.toolbarweburl, "_system");
 	},
 	
 	openComment: function() {
-		window.open(this.toolbarcommenturl);
+		window.open(this.toolbarcommenturl, "_system");
 	},
 	
 	openMail: function() {

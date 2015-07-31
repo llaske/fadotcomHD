@@ -61,6 +61,15 @@ enyo.kind({
 		// Set article body
 		this.$.itemCorps.setContent(record.corps);
 		
+		// Intercept a href tag to force open in a new window
+		var hrefs = this.$.itemCorps.hasNode().getElementsByTagName("a");
+		for(var i = 0 ; i < hrefs.length ; i++) {
+			hrefs[i].addEventListener("click", function(e) {
+				window.open(this.href, "_system");
+				e.preventDefault();
+			});		
+		}
+		
 		// Update toolbar
 		app.spinnerDetail(false);
 		app.setToolbarWebsite("http://www.footballamericain.com"+this.record.urlsite);
