@@ -46,6 +46,12 @@ Preferences.save = function() {
 	this.storage.setValue(this.key, this.menu);
 }
 
+// Replace team image by a fair use image (need only on iOS)
+Preferences.fairuseImage = function(image) {
+	if (enyo.platform.ios)
+		return image.replace("-logo.jpg", "-logo-fu.png");
+	return image;
+}
 
 
 // Preferences screen

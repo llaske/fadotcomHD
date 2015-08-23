@@ -74,7 +74,7 @@ enyo.kind({
 		inEvent.item.$.match.setContent(scorestring);
 		inEvent.item.$.vsat.setContent(place);
 		inEvent.item.$.detailmatchItem.addClass(theme);	
-		inEvent.item.$.imageOppTeam.setSrc("http://footballamericain.com/images/images/team/100/"+teamopp.image);
+		inEvent.item.$.imageOppTeam.setSrc(Preferences.fairuseImage("http://footballamericain.com/images/images/team/100/"+teamopp.image));
 	},
 	
 	// Click on a score, view the match

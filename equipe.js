@@ -106,7 +106,7 @@ enyo.kind({
 		// Set team info
 		this.$.itemNom.setContent(this.team.nom);
 		this.$.itemVille.setContent(this.team.ville);
-		this.$.itemImageTeam.setSrc("http://footballamericain.com/images/images/team/100/"+this.team.image);
+		this.$.itemImageTeam.setSrc(Preferences.fairuseImage("http://footballamericain.com/images/images/team/100/"+this.team.image));
 		app.setFavorite(this.team);
 		app.setToolbarDetail({"favbutton": true});
 		History.displayButton();		

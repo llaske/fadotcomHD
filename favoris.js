@@ -129,7 +129,7 @@ enyo.kind({
 	// Set items properties
 	teamChanged: function() {
 		if (this.team == null) return;
-		this.$.itemImage.setAttribute("src", "http://footballamericain.com/images/images/team/100/"+this.team.image);
+		this.$.itemImage.setAttribute("src", Preferences.fairuseImage("http://footballamericain.com/images/images/team/100/"+this.team.image));
 		this.$.itemName.setContent(this.team.ville+" "+this.team.nom);
 	},
 	
@@ -220,7 +220,7 @@ enyo.kind({
 	// Set items properties
 	teamChanged: function() {
 		if (this.team == null) return;
-		this.$.itemImage.setAttribute("src", "http://footballamericain.com/images/images/team/100/"+this.team.image);
+		this.$.itemImage.setAttribute("src", Preferences.fairuseImage("http://footballamericain.com/images/images/team/100/"+this.team.image));
 		this.$.itemName.setContent(this.team.ville+" "+this.team.nom);
 		this.$.favbutton.setValue(TeamFavorites.is(this.team));
 	},

@@ -72,7 +72,7 @@ enyo.kind({
 	teamdomChanged: function() {
 		this.$.itemNomDom.setContent(this.teamdom.nom);	
 		this.$.scoredom.setContent(this.teamdom.nom);			
-		this.$.itemImageDom.setSrc("http://footballamericain.com/images/images/team/100/"+this.teamdom.image);	
+		this.$.itemImageDom.setSrc(Preferences.fairuseImage("http://footballamericain.com/images/images/team/100/"+this.teamdom.image));
 		this.$.itemScoreDom.setContent(this.match.scoredom);	
 	},
 	
@@ -80,7 +80,7 @@ enyo.kind({
 	teamextChanged: function() {
 		this.$.itemNomExt.setContent(this.teamext.nom);
 		this.$.scoreext.setContent(this.teamext.nom);		
-		this.$.itemImageExt.setSrc("http://footballamericain.com/images/images/team/100/"+this.teamext.image);	
+		this.$.itemImageExt.setSrc(Preferences.fairuseImage("http://footballamericain.com/images/images/team/100/"+this.teamext.image));
 		this.$.itemScoreExt.setContent(this.match.scoreext);	
 	},
 	

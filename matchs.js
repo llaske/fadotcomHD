@@ -180,13 +180,13 @@ enyo.kind({
 	// Set team dom value
 	teamDomChanged: function() {
 		this.$.itemNomDom.setContent(this.teamDom.nom);
-		this.$.itemImageDom.setAttribute("src", "http://footballamericain.com/images/images/team/100/"+this.teamDom.image);
+		this.$.itemImageDom.setAttribute("src", Preferences.fairuseImage("http://footballamericain.com/images/images/team/100/"+this.teamDom.image));
 	},
 
 	// Set team ext value
 	teamExtChanged: function() {
 		this.$.itemNomExt.setContent(this.teamExt.nom);
-		this.$.itemImageExt.setAttribute("src", "http://footballamericain.com/images/images/team/100/"+this.teamExt.image);	
+		this.$.itemImageExt.setAttribute("src", Preferences.fairuseImage("http://footballamericain.com/images/images/team/100/"+this.teamExt.image));
 	},
 	
 	// Set selection
